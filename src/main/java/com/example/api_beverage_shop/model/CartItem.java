@@ -13,25 +13,35 @@ import java.util.List;
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "topping")
+@Table(name = "cartItem")
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartItemId;
 
-    @Column(name = "userId")
-    private int productId;
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
 
-    @Column(name = "userId")
-    private int cartId;
+    @ManyToOne
+    @JoinColumn(name = "cartId")
+    private Cart cart;
 
-//    @Column(name = "userId")
-    private List<Topping> listTopping;
-    private int sizeId;
+    @ManyToMany
+    @JoinTable(
+            name = "cartItem_topping",
+            joinColumns = {@JoinColumn(name = "cartItemId", referencedColumnName = "cartItemId")},
+            inverseJoinColumns = {@JoinColumn(name = "toppingId", referencedColumnName = "toppingId")}
+    )
+    private List<Topping> toppings;
 
-    @Column(name = "userId")
+    @ManyToOne
+    @JoinColumn(name = "sizeId")
+    private Size sizeProduct;
+
+    @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "userId")
+    @Column(name = "totalPrice")
     private int totalPrice;
 }

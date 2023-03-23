@@ -11,12 +11,13 @@ import lombok.ToString;
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "topping")
+@Table(name = "Cart")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int cartId;
 
-    @Column(name = "userId")
-    private int userId;
+    @OneToOne
+    @JoinColumn(name = "userId")
+    private User user;
 }

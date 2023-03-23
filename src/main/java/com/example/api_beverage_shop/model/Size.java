@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "topping")
+@Table(name = "Size")
 public class Size {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

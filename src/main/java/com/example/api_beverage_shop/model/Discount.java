@@ -13,30 +13,30 @@ import java.time.LocalDate;
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "topping")
+@Table(name = "Discount")
 public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int discountId;
 
-    @Column(name = "userId")
+    @Column(name = "discountCode")
     private String discountCode;
 
-    @Column(name = "userId")
+    @Column(name = "imageDemo")
     private String imageDemo;
 
-    @Column(name = "userId")
+    @Column(name = "dateStart")
     private LocalDate dateStart;
 
-    @Column(name = "userId")
+    @Column(name = "dateEnd")
     private LocalDate dateEnd;
 
-    @Column(name = "userId")
+    @Column(name = "discountValue")
     private int discountValue;
 
-    @Column(name = "userId")
+    @Column(name = "description")
     private String description;
 
-    @Column(name = "userId")
+    @Column(name = "quantity")
     private int quantity;
 }

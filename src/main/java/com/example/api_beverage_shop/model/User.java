@@ -7,13 +7,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Setter
 @Getter
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "user")
+@Table(name = "User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,4 +46,16 @@ public class User {
 
     @Column(name = "phone")
     private String phone;
+
+    @ManyToOne
+    @JoinColumn(name = "roleId")
+    private Role role;
+
+    //Two way mapping
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
+    @OneToMany(mappedBy = "orderUser")
+    private List<Order> orderList;
+
 }

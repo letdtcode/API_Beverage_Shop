@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Setter
 @Getter
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "topping")
+@Table(name = "Product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,4 +30,15 @@ public class Product {
 
     @Column(name = "quantity")
     private int quantity;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
+
+    //    Two way mapping
+    @OneToMany(mappedBy = "product")
+    private List<OrderItem> orderItems;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductImage> productImages;
 }

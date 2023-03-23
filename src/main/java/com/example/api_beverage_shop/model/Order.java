@@ -13,39 +13,43 @@ import java.util.List;
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "topping")
+@Table(name = "Order")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderId;
 
-    @Column(name = "userId")
+    @Column(name = "nameCus")
     private String nameCustomer;
 
-    @Column(name = "userId")
+    @Column(name = "phoneNumber")
     private String phoneNumber;
 
-    @Column(name = "userId")
+    @Column(name = "address")
     private String address;
 
-    @Column(name = "userId")
+    @Column(name = "shipping")
     private int shipping;
 
-    @Column(name = "userId")
-    private int totalItemPrice;
-
-    @Column(name = "userId")
+    @Column(name = "payment")
     private int payment;
 
-    @Column(name = "userId")
-    private int discountId;
+    @Column(name = "totalItemPrice")
+    private int totalItemPrice;
 
-    @Column(name = "userId")
+
+    @Column(name = "totalPrice")
     private int totalPrice;
 
-    @Column(name = "userId")
-    private List<OrderItem> listOrderItem;
+    @ManyToOne
+    @JoinColumn(name = "discountId")
+    private Discount discount;
 
-    @Column(name = "userId")
-    private int userId;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User userOrder;
+
+//    Two way mapping
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> orderItems;
 }

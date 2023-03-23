@@ -11,14 +11,15 @@ import lombok.ToString;
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "topping")
+@Table(name = "ProductImage")
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productImageId;
 
-    @Column(name = "productId")
-    private int productId;
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
 
     @Column(name = "image")
     private String image;

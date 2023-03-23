@@ -13,18 +13,38 @@ import java.util.List;
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "topping")
+@Table(name = "OrderItem")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int orderItemId;
 
-    @Column(name = "productId")
-    private int productId;
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
 
-    @Column(name = "orderId")
-    private int orderId;
+    @ManyToOne
+    @JoinColumn(name = "orderId")
+    private Order order;
 
-//    @Column(name = "listTopping")
-    private List<Topping> listTopping;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "orderItem_topping",
+            joinColumns = {@JoinColumn(name = "orderItemId", referencedColumnName = "orderItemId")},
+            inverseJoinColumns = {@JoinColumn(name = "toppingId", referencedColumnName = "toppingId")}
+    )
+    private List<Topping> toppings;
+
+    @ManyToOne
+    @JoinColumn(name = "sizeId")
+    private Size sizeProduct;
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "totalPriceProduct")
+    private int totalPriceProduct;
+
+    @Column(name = "totalPriceItem")
+    private int totalPriceItem;
 }

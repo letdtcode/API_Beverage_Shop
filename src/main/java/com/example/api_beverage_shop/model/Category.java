@@ -6,20 +6,25 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Setter
 @Getter
 @ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "topping")
+@Table(name = "Category")
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int categoryId;
 
-    @Column(name = "userId")
+    @Column(name = "categoryName")
     private String categoryName;
 
-    @Column(name = "userId")
+    @Column(name = "description")
     private String description;
+
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }
