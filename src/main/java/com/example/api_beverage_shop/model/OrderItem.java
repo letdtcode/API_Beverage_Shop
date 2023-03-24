@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Setter
@@ -43,8 +44,8 @@ public class OrderItem {
     private int quantity;
 
     @Column(name = "totalPriceProduct")
-    private int totalPriceProduct;
+    private BigDecimal totalPriceProduct;
 
     @Column(name = "totalPriceItem")
-    private int totalPriceItem;
+    private BigDecimal totalPriceItem;
 }

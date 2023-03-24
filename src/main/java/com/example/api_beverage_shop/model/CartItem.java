@@ -1,11 +1,9 @@
 package com.example.api_beverage_shop.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Setter
@@ -42,6 +40,9 @@ public class CartItem {
     @Column(name = "quantity")
     private int quantity;
 
-    @Column(name = "totalPrice")
-    private int totalPrice;
+    @Column(name = "totalPriceProduct")
+    private BigDecimal totalPriceProduct;
+
+    @Column(name = "totalPriceItem")
+    private BigDecimal totalPriceItem;
 }

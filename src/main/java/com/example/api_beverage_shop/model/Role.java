@@ -15,7 +15,7 @@ import lombok.ToString;
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int roleId;
+    private Long roleId;
 
     @Column(name = "roleName")
     private String roleName;

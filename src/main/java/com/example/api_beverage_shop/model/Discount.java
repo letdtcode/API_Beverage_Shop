@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Setter
@@ -32,7 +33,7 @@ public class Discount {
     private LocalDate dateEnd;
 
     @Column(name = "discountValue")
-    private int discountValue;
+    private BigDecimal discountValue;
 
     @Column(name = "description")
     private String description;

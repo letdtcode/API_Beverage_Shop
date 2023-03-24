@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Setter
 @Getter
 @ToString
@@ -21,5 +23,5 @@ public class Size {
     private String sizeName;
 
     @Column(name = "pricePlus")
-    private int pricePlus;
+    private BigDecimal pricePlus;
 }

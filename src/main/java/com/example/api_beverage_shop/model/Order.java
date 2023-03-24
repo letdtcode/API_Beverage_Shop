@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Setter
@@ -35,11 +36,11 @@ public class Order {
     private int payment;
 
     @Column(name = "totalItemPrice")
-    private int totalItemPrice;
+    private BigDecimal totalItemPrice;
 
 
     @Column(name = "totalPrice")
-    private int totalPrice;
+    private BigDecimal totalPrice;
 
     @ManyToOne
     @JoinColumn(name = "discountId")

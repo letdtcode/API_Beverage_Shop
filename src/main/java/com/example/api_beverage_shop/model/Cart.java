@@ -6,6 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 @Setter
 @Getter
 @ToString
@@ -20,4 +23,10 @@ public class Cart {
     @OneToOne
     @JoinColumn(name = "userId")
     private User user;
+
+    @OneToMany(mappedBy = "cart")
+    private List<CartItem> cartItems;
+
+    @Column(name = "totalPrice")
+    private BigDecimal totalPrice;
 }
