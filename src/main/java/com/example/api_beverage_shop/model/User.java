@@ -1,19 +1,23 @@
 package com.example.api_beverage_shop.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "User")
 public class User {
     @Id
@@ -47,9 +51,16 @@ public class User {
     @Column(name = "phone")
     private String phone;
 
-    @ManyToOne
-    @JoinColumn(name = "roleId")
-    private Role role;
+    @Column(name = "avatar")
+    private String avatar;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_role",
+            joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "roleId", referencedColumnName = "roleId")}
+    )
+    private Set<Role> roles;
 
     //Two way mapping
     @OneToOne(mappedBy = "user")
@@ -57,5 +68,4 @@ public class User {
 
     @OneToMany(mappedBy = "userOrder")
     private List<Order> orderList;
-
 }
