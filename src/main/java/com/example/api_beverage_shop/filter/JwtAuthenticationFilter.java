@@ -1,7 +1,7 @@
 package com.example.api_beverage_shop.filter;
 
-import com.example.api_beverage_shop.service.custom.CustomUserDetailService;
-import com.example.api_beverage_shop.service.jwt.JwtServiceImpl;
+import com.example.api_beverage_shop.security.CustomUserDetailsService;
+import com.example.api_beverage_shop.security.jwt.JwtServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -27,8 +26,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtServiceImpl jwtService;
+
     @Autowired
-    private CustomUserDetailService userDetailService;
+    private CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -47,7 +47,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                UserDetails userDetails = userDetailService.loadUserByUsername(userName);
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(userName);
 
                 if (jwtService.validateToken(token, userDetails)) {
 

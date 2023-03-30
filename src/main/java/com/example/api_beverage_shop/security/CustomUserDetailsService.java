@@ -1,4 +1,4 @@
-package com.example.api_beverage_shop.service.custom;
+package com.example.api_beverage_shop.security;
 
 import com.example.api_beverage_shop.model.Role;
 import com.example.api_beverage_shop.model.User;
@@ -14,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CustomUserDetailService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
-    private IUserRepository userRepository;
+    private IUserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String mail) throws UsernameNotFoundException {
 
-        User user = userRepository.findByMail(username).get();
+        User user = repository.findByMail(mail).get();
 
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
 

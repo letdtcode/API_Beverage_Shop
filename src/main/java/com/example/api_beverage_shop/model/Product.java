@@ -20,13 +20,13 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int productId;
 
-    @Column(name = "productName")
+    @Column(name = "productName", columnDefinition = "nvarchar(255)")
     private String productName;
 
     @Column(name = "priceDefault")
     private BigDecimal priceDefault;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "nvarchar(MAX) not null")
     private String description;
 
     @Column(name = "quantity")

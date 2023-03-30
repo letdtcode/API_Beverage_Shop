@@ -1,4 +1,4 @@
-package com.example.api_beverage_shop.controller;
+package com.example.api_beverage_shop.controller.admin;
 
 import com.example.api_beverage_shop.dto.RoleDTO;
 import com.example.api_beverage_shop.repository.IRoleRepository;

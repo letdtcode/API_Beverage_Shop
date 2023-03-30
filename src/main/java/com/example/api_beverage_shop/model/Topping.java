@@ -19,7 +19,7 @@ public class Topping {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int toppingId;
 
-    @Column(name = "toppingName")
+    @Column(name = "toppingName", columnDefinition = "nvarchar(255)")
     private String toppingName;
 
     @Column(name = "toppingPrice")

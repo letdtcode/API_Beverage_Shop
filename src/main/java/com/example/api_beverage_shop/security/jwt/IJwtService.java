@@ -1,13 +1,10 @@
-package com.example.api_beverage_shop.service.jwt;
+package com.example.api_beverage_shop.security.jwt;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 public interface IJwtService {
@@ -23,9 +20,9 @@ public interface IJwtService {
 
     public Boolean isTokenExpired(String token);
 
-    public String generateToken(UserDetails userDetails);
+    public String generateToken(Authentication auth);
 
 //    public String createToken(Map<String, Object> claims, String subject, Boolean refresh_token);
-    public String generateRefreshToken(UserDetails userDetails);
+    public String generateRefreshToken(Authentication auth);
     public Boolean validateToken(String token, UserDetails userDetails);
 }

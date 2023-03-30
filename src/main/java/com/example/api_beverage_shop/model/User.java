@@ -30,10 +30,10 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "firstName")
+    @Column(name = "firstName", columnDefinition = "nvarchar(255)")
     private String firstName;
 
-    @Column(name = "lastName")
+    @Column(name = "lastName", columnDefinition = "nvarchar(255)")
     private String lastName;
 
     @Column(name = "gender")
@@ -45,7 +45,7 @@ public class User {
     @Column(name = "mail")
     private String mail;
 
-    @Column(name = "address")
+    @Column(name = "address", columnDefinition = "nvarchar(255)")
     private String address;
 
     @Column(name = "phone")

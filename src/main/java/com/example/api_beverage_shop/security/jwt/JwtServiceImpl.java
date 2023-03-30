@@ -1,26 +1,22 @@
-package com.example.api_beverage_shop.service.jwt;
+package com.example.api_beverage_shop.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.example.api_beverage_shop.security.UserPrincipal;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 
 @Service
-public class JwtServiceImpl implements IJwtService{
+public class JwtServiceImpl implements IJwtService {
     private String SECRET_KEY = "thisissecret";
 
     public String extractUsername(String token) {
@@ -48,32 +44,25 @@ public class JwtServiceImpl implements IJwtService{
         return extractExpiration(token).before(new Date());
     }
 
-    public String generateToken(UserDetails userDetails) {
-//        Map<String, Object> claims = new HashMap<>();
-//        claims.put("roles", userDetails.getAuthorities().toString());
-//        return createToken(claims, userDetails.getUsername(), refresh_token);
-//        Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
-//        return JWT.create()
-//                .withSubject(userDetails.getUsername())
-//                .withExpiresAt(new Date(System.currentTimeMillis() + 50 * 60 * 1000))
-//                .withClaim("roles", userDetails.getAuthorities().stream().toList())
-//                .sign(algorithm);
+    public String generateToken(Authentication auth) {
         try {
+            UserPrincipal userPrincipal = (UserPrincipal) auth.getPrincipal();
             Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
             return JWT.create()
-                    .withSubject(userDetails.getUsername())
+                    .withSubject(userPrincipal.getUsername())
                     .withExpiresAt(new Date(System.currentTimeMillis() + 50 * 60 * 1000))
-                    .withClaim("roles", userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
+                    .withClaim("roles", userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                     .sign(algorithm);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
-    public String generateRefreshToken(UserDetails userDetails) {
+    public String generateRefreshToken(Authentication auth) {
+        UserPrincipal userPrincipal = (UserPrincipal) auth.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY.getBytes());
         return JWT.create()
-                .withSubject(userDetails.getUsername())
+                .withSubject(userPrincipal.getUsername())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 50 * 60 * 1000))
                 .sign(algorithm);
     }
