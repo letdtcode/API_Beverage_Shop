@@ -5,6 +5,7 @@ import com.example.api_beverage_shop.exception.StorageException;
 import org.springframework.core.io.*;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+@Service
 public class FileSystemStorageServiceImpl implements IStorageService {
     private final Path rootLocation;
     @Override

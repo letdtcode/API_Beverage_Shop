@@ -21,6 +21,6 @@ public class ProductImage {
     @JoinColumn(name = "productId")
     private Product product;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "imageurl")
+    private String imageurl;
 }

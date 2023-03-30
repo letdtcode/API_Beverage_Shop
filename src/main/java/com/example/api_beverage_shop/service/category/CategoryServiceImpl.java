@@ -13,8 +13,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
@@ -24,6 +26,7 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Autowired
     private IProductRepository productRepository;
+    @Autowired
     private ModelMapper mapper;
 
     @Override

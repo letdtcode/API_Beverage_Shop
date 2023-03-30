@@ -18,7 +18,7 @@ import java.util.List;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int productId;
+    private Long productId;
 
     @Column(name = "productName", columnDefinition = "nvarchar(255)")
     private String productName;
@@ -41,5 +41,5 @@ public class Product {
     private List<OrderItem> orderItems;
 
     @OneToMany(mappedBy = "product")
-    private List<ProductImage> productImages;
+    private List<ProductImage> productImagesUrl;
 }
