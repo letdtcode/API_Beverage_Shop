@@ -15,7 +15,7 @@ public class ProductMapper {
     private ModelMapper mapper;
     private final Converter<Category, Long> categoryToCategoryIdConverter = context -> {
         Category category = context.getSource();
-        return category != null ? category.getCategoryId() : null;
+        return category != null ? category.getId() : null;
     };
 
     @PostConstruct

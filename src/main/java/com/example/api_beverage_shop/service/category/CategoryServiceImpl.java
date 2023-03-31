@@ -17,6 +17,7 @@ import javax.swing.text.html.Option;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServiceImpl implements ICategoryService {
@@ -39,7 +40,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public List<CategoryDTO> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
         List<CategoryDTO> categoryDTOList =
-                Arrays.asList(mapper.map(categories, CategoryDTO[].class));
+                categories.stream().map(cate -> mapper.map(cate, CategoryDTO.class)).collect(Collectors.toList());
         return categoryDTOList;
     }
 
@@ -53,7 +54,7 @@ public class CategoryServiceImpl implements ICategoryService {
         Category category = categoryRepository.findById(Id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + Id));
         List<Product> productList = productRepository.findByCategory(category);
-        return Arrays.asList(mapper.map(productList, ProductDTO[].class));
+        return productList.stream().map(product -> mapper.map(product, ProductDTO.class)).collect(Collectors.toList());
     }
 
     @Override
