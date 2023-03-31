@@ -14,5 +14,7 @@ public interface ICategoryService {
 
     List<ProductDTO> getAllProductByCategoryId(Long Id);
 
-    CategoryDTO saveCategory(CategoryDTO categoryDTO);
+    CategoryDTO createCategory(CategoryDTO categoryDTO);
+
+    CategoryDTO updateCategory(CategoryDTO categoryDTO, Long id) throws Exception;
 }

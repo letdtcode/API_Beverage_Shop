@@ -13,8 +13,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,8 +30,11 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public CategoryDTO getCategoryByName(String name) {
-        Category category = categoryRepository.findByCategoryName(name).get();
-        return mapper.map(category, CategoryDTO.class);
+        Optional<Category> category = categoryRepository.findByCategoryName(name);
+        if (category.isPresent()) {
+            return mapper.map(category.get(), CategoryDTO.class);
+        }
+        throw new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND_WITH_NAME + name);
     }
 
     @Override
@@ -46,7 +47,11 @@ public class CategoryServiceImpl implements ICategoryService {
 
     @Override
     public CategoryDTO getCategoryById(Long Id) {
-        return mapper.map(categoryRepository.findById(Id), CategoryDTO.class);
+        Optional<Category> category = categoryRepository.findById(Id);
+        if (category.isPresent()) {
+            return mapper.map(category.get(), CategoryDTO.class);
+        }
+        throw new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + Id);
     }
 
     @Override
@@ -58,17 +63,25 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public CategoryDTO saveCategory(CategoryDTO categoryDTO) {
-        Long id = categoryDTO.getId();
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         Category category = Category.builder().build();
-        if (id != null) {
-            Category oldCategory = categoryRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + id));
-            BeanUtils.copyProperties(oldCategory, category);
-            BeanUtils.copyProperties(categoryDTO, category);
-        } else {
-            BeanUtils.copyProperties(categoryDTO, category);
-        }
+        BeanUtils.copyProperties(categoryDTO, category);
         category = categoryRepository.save(category);
         return mapper.map(category, CategoryDTO.class);
     }
+
+    @Override
+    public CategoryDTO updateCategory(CategoryDTO categoryDTO, Long id) throws Exception {
+
+        Category entity = Category.builder().build();
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category.isPresent()) {
+            BeanUtils.copyProperties(category.get(), entity);
+            mapper.map(categoryDTO, entity);
+            entity = categoryRepository.save(entity);
+            return mapper.map(entity, CategoryDTO.class);
+        } else throw new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + id);
+    }
+
+
 }

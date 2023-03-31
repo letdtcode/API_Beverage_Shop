@@ -106,7 +106,13 @@
             <version>1.5</version>
         </dependency>
 
-
+        <!--        Config BeanUtils-->
+        <!-- https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.4</version>
+        </dependency>
 
 
     </dependencies>

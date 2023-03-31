@@ -27,22 +27,28 @@ public class CategoryController {
         List<CategoryDTO> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(categories);
     }
-    @GetMapping("/{category_id}/products")
-    public ResponseEntity<List<ProductDTO>> getAllProductByCategoryId(@PathVariable("category_id") Long categoryId) {
-        return ResponseEntity.ok(categoryService.getAllProductByCategoryId(categoryId));
+    @GetMapping("/category/{id}")
+    public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(categoryService.getCategoryById(id));
+    }
+
+    @GetMapping("category")
+    public ResponseEntity<CategoryDTO> getCategoryByName(@RequestParam("name") String nameCategory) {
+        return ResponseEntity.ok(categoryService.getCategoryByName(nameCategory));
     }
 
     @PostMapping("/categories")
     public ResponseEntity<CategoryDTO> createCategory(
             @RequestBody CategoryDTO categoryDTO) {
-        return ResponseEntity.ok(categoryService.saveCategory(categoryDTO));
+        return ResponseEntity.ok(categoryService.createCategory(categoryDTO));
     }
-    @PutMapping("/admin/categories/{id}")
-    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable long id, @RequestBody CategoryDTO categoryDTO) {
-        return ResponseEntity.ok(categoryService.saveCategory(categoryDTO));
+    @PutMapping("/categories/{id}")
+    public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) throws Exception {
+        return ResponseEntity.ok(categoryService.updateCategory(categoryDTO,id));
     }
-    @DeleteMapping("/admin/categories/{id}")
-    public ResponseEntity<CategoryDTO> de(@PathVariable long id, @RequestBody CategoryDTO categoryDTO) {
-        return ResponseEntity.ok(categoryService.saveCategory(categoryDTO));
+    @GetMapping("/{category_id}/products")
+    public ResponseEntity<List<ProductDTO>> getAllProductByCategoryId(@PathVariable("category_id") Long categoryId) {
+        return ResponseEntity.ok(categoryService.getAllProductByCategoryId(categoryId));
     }
+
 }
