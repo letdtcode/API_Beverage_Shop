@@ -9,7 +9,7 @@ import java.nio.file.Path;
 public interface IStorageService {
     public String getStorageFilename(MultipartFile file, String id);
 
-    public void store(MultipartFile file, String storeFilename) throws IOException;
+    public void store(MultipartFile file, String storeFilename);
 
     public Resource loadAsResource(String fileName);
 

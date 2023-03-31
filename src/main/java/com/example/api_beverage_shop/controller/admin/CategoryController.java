@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/admin")
 @RequiredArgsConstructor
 public class CategoryController {
 
@@ -32,7 +32,7 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAllProductByCategoryId(categoryId));
     }
 
-    @PostMapping("/admin/categories")
+    @PostMapping("/categories")
     public ResponseEntity<CategoryDTO> createCategory(
             @RequestBody CategoryDTO categoryDTO) {
         return ResponseEntity.ok(categoryService.saveCategory(categoryDTO));

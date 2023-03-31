@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDTO {
-    private Long productId;
+    private Long Id;
 
     private String productName;
     private BigDecimal priceDefault;
@@ -20,7 +20,7 @@ public class ProductDTO {
     private int quantity;
     private Long categoryId;
 
-    private List <MultipartFile> productImages;
+    private MultipartFile productImages;
 
-    private List<String> urlImages;
+    private String pathImage;
 }

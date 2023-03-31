@@ -27,7 +27,7 @@ public class FileSystemStorageServiceImpl implements IStorageService {
         this.rootLocation = Paths.get(properties.getLocation());
     }
     @Override
-    public void store(MultipartFile file, String storeFilename) throws IOException {
+    public void store(MultipartFile file, String storeFilename) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file");

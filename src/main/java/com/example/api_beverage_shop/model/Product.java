@@ -1,24 +1,22 @@
 package com.example.api_beverage_shop.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "Product")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long productId;
+    private Long Id;
 
     @Column(name = "productName", columnDefinition = "nvarchar(255)")
     private String productName;
@@ -40,6 +38,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<OrderItem> orderItems;
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductImage> productImagesUrl;
+    @Column(name = "pathImage")
+    private String pathImage;
 }

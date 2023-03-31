@@ -3,11 +3,9 @@ package com.example.api_beverage_shop.mapper;
 import com.example.api_beverage_shop.dto.ProductDTO;
 import com.example.api_beverage_shop.model.Category;
 import com.example.api_beverage_shop.model.Product;
-import com.example.api_beverage_shop.model.ProductImage;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,18 +17,12 @@ public class ProductMapper {
         Category category = context.getSource();
         return category != null ? category.getCategoryId() : null;
     };
-    private final Converter<ProductImage, String> productImageStringConverter = context -> {
-        ProductImage productImage = context.getSource();
-        return productImage != null ? productImage.getImageurl() : null;
-    };
 
     @PostConstruct
     public void init() {
         mapper.createTypeMap(Product.class, ProductDTO.class)
                 .addMappings(mapper -> mapper.using(categoryToCategoryIdConverter)
-                        .map(Product::getCategory, ProductDTO::setCategoryId))
-                .addMappings(mapper -> mapper.using(productImageStringConverter)
-                        .map(Product::getProductImagesUrl, ProductDTO::setUrlImages));
+                        .map(Product::getCategory, ProductDTO::setCategoryId));
     }
 
     public ProductDTO toDTO(Product product) {
