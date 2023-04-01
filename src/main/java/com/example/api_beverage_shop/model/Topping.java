@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 public class Topping {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int toppingId;
+    private Long Id;
 
     @Column(name = "toppingName", columnDefinition = "nvarchar(255)")
     private String toppingName;

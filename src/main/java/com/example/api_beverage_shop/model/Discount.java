@@ -11,14 +11,13 @@ import java.time.LocalDate;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @NoArgsConstructor
 @Table(name = "Discount")
 public class Discount {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int discountId;
+    private Long Id;
 
     @Column(name = "discountCode")
     private String discountCode;
@@ -39,5 +38,5 @@ public class Discount {
     private String description;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 }

@@ -9,7 +9,7 @@ import com.example.api_beverage_shop.model.RoleName;
 import com.example.api_beverage_shop.model.User;
 import com.example.api_beverage_shop.repository.IRoleRepository;
 import com.example.api_beverage_shop.repository.IUserRepository;
-import com.example.api_beverage_shop.util.AppConstant;
+import com.example.api_beverage_shop.config.util.AppConstant;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

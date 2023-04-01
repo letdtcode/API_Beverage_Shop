@@ -24,11 +24,11 @@ public class Product {
     @Column(name = "priceDefault")
     private BigDecimal priceDefault;
 
-    @Column(name = "description", columnDefinition = "nvarchar(MAX) not null")
+    @Column(name = "description", columnDefinition = "longtext")
     private String description;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     @ManyToOne
     @JoinColumn(name = "categoryId")

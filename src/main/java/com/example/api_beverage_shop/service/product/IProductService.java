@@ -7,11 +7,13 @@ import java.util.List;
 
 public interface IProductService {
     public List<ProductDTO> getAllProducts();
-    public ProductDTO getProduct(Long Id);
+    public ProductDTO getProductById(Long Id);
 
-    public ProductDTO createProduct(ProductDTO productDTO, MultipartFile file) throws Exception;
+    public ProductDTO getProductByName(String name);
 
-    public ProductDTO updateImageForProduct(Long Id, MultipartFile file) throws Exception;
+    public ProductDTO createProduct(ProductDTO productDTO, MultipartFile file);
 
-    public ProductDTO updateInfoForProduct(ProductDTO productDTO, Long id) throws Exception;
+    public ProductDTO updateImageForProduct(Long Id, MultipartFile file);
+
+    public ProductDTO updateInfoForProduct(ProductDTO productDTO, Long id);
 }

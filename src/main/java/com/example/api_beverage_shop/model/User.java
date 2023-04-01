@@ -22,7 +22,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private Long Id;
 
     @Column(name = "userName")
     private String userName;
@@ -37,7 +37,7 @@ public class User {
     private String lastName;
 
     @Column(name = "gender")
-    private int gender;
+    private Integer gender;
 
     @Column(name = "dateOfBirth")
     private LocalDate dateOfBirth;
@@ -57,8 +57,8 @@ public class User {
     @ManyToMany
     @JoinTable(
             name = "user_role",
-            joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
-            inverseJoinColumns = {@JoinColumn(name = "roleId", referencedColumnName = "roleId")}
+            joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "Id")},
+            inverseJoinColumns = {@JoinColumn(name = "roleId", referencedColumnName = "Id")}
     )
     private Set<Role> roles;
 

@@ -12,14 +12,13 @@ import java.util.Set;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @NoArgsConstructor
-@Table(name = "Order")
+@Table(name = "OrderBill")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderId;
+    private Long Id;
 
     @Column(name = "nameCus", columnDefinition = "nvarchar(255)")
     private String nameCustomer;
@@ -31,10 +30,10 @@ public class Order {
     private String address;
 
     @Column(name = "shipping")
-    private int shipping;
+    private Integer shipping;
 
     @Column(name = "payment")
-    private int payment;
+    private Integer payment;
 
     @Column(name = "totalItemPrice")
     private BigDecimal totalItemPrice;

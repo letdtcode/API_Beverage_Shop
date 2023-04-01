@@ -11,14 +11,13 @@ import java.util.List;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @NoArgsConstructor
 @Table(name = "OrderItem")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int orderItemId;
+    private Long Id;
 
     @ManyToOne
     @JoinColumn(name = "productId")
@@ -31,8 +30,8 @@ public class OrderItem {
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "orderItem_topping",
-            joinColumns = {@JoinColumn(name = "orderItemId", referencedColumnName = "orderItemId")},
-            inverseJoinColumns = {@JoinColumn(name = "toppingId", referencedColumnName = "toppingId")}
+            joinColumns = {@JoinColumn(name = "orderItemId", referencedColumnName = "Id")},
+            inverseJoinColumns = {@JoinColumn(name = "toppingId", referencedColumnName = "Id")}
     )
     private List<Topping> toppings;
 
@@ -41,7 +40,7 @@ public class OrderItem {
     private Size sizeProduct;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     @Column(name = "totalPriceProduct")
     private BigDecimal totalPriceProduct;

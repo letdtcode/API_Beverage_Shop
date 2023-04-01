@@ -8,14 +8,13 @@ import java.util.List;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @NoArgsConstructor
 @Table(name = "cartItem")
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cartItemId;
+    private Long Id;
 
     @ManyToOne
     @JoinColumn(name = "productId")
@@ -28,8 +27,8 @@ public class CartItem {
     @ManyToMany
     @JoinTable(
             name = "cartItem_topping",
-            joinColumns = {@JoinColumn(name = "cartItemId", referencedColumnName = "cartItemId")},
-            inverseJoinColumns = {@JoinColumn(name = "toppingId", referencedColumnName = "toppingId")}
+            joinColumns = {@JoinColumn(name = "cartItemId", referencedColumnName = "Id")},
+            inverseJoinColumns = {@JoinColumn(name = "toppingId", referencedColumnName = "Id")}
     )
     private List<Topping> toppings;
 
@@ -38,7 +37,7 @@ public class CartItem {
     private Size sizeProduct;
 
     @Column(name = "quantity")
-    private int quantity;
+    private Integer quantity;
 
     @Column(name = "totalPriceProduct")
     private BigDecimal totalPriceProduct;

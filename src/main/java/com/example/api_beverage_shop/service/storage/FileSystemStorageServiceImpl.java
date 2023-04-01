@@ -2,8 +2,8 @@ package com.example.api_beverage_shop.service.storage;
 
 import com.example.api_beverage_shop.config.StorageProperties;
 import com.example.api_beverage_shop.exception.StorageException;
-import org.springframework.core.io.*;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +18,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileSystemStorageServiceImpl implements IStorageService {
     private final Path rootLocation;
+
     @Override
     public String getStorageFilename(MultipartFile file, String id) {
         String ext = FilenameUtils.getExtension(file.getOriginalFilename());

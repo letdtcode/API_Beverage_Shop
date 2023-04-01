@@ -16,7 +16,7 @@ import java.util.List;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int cartId;
+    private Long Id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "userId")
