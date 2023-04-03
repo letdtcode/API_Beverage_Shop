@@ -1,6 +1,6 @@
 package com.example.api_beverage_shop.mapper;
 
-import com.example.api_beverage_shop.config.util.AppConstant;
+import com.example.api_beverage_shop.util.AppConstant;
 import com.example.api_beverage_shop.dto.ProductDTO;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.Category;
@@ -13,7 +13,6 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.Mapping;
 
 @Component
 public class ProductMapper {

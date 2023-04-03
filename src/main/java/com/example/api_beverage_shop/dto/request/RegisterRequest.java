@@ -6,6 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,6 +24,18 @@ public class RegisterRequest {
 
     @NotBlank
     private String password;
+
+    @NotBlank
+    private Integer gender;
+
+    @NotBlank
+    private LocalDate dateOfBirth;
+
+    @NotBlank
+    private String address;
+
+    @NotBlank
+    private String phone;
 
     @NotBlank
     private Set<String> roles = new HashSet<>(Arrays.asList("USER"));

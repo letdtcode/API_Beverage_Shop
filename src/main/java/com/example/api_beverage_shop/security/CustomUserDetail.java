@@ -1,8 +1,11 @@
 package com.example.api_beverage_shop.security;
 
+import com.example.api_beverage_shop.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
@@ -12,16 +15,10 @@ import java.util.Objects;
 
 @Data
 @Slf4j
-public class UserPrincipal implements UserDetails {
-    private static final long serialVersionUID = 1L;
-    private Long id;
-    private String userName;
-    private String firstName;
-    private String lastName;
-    private String mail;
-    private String password;
-    private String phoneNumber;
-    private List<GrantedAuthority> authorities;
+@AllArgsConstructor
+public class CustomUserDetail implements UserDetails {
+    private User user;
+    private List<SimpleGrantedAuthority> authorities;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities == null ? null : new ArrayList<>(this.authorities);
@@ -29,12 +26,12 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return this.password;
+        return this.user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.mail;
+        return this.user.getMail();
     }
 
     @Override
@@ -57,18 +54,18 @@ public class UserPrincipal implements UserDetails {
         return true;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        if (this == object)
-            return true;
-        if (object == null || getClass() != object.getClass())
-            return false;
-        UserPrincipal that = (UserPrincipal) object;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+//    @Override
+//    public boolean equals(Object object) {
+//        if (this == object)
+//            return true;
+//        if (object == null || getClass() != object.getClass())
+//            return false;
+//        UserPrincipal that = (UserPrincipal) object;
+//        return Objects.equals(id, that.id);
+//    }
+//
+//    @Override
+//    public int hashCode() {
+//        return Objects.hash(id);
+//    }
 }

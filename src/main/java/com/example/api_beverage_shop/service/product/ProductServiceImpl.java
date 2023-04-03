@@ -6,7 +6,7 @@ import com.example.api_beverage_shop.mapper.ProductMapper;
 import com.example.api_beverage_shop.model.Product;
 import com.example.api_beverage_shop.repository.IProductRepository;
 import com.example.api_beverage_shop.service.storage.IStorageService;
-import com.example.api_beverage_shop.config.util.AppConstant;
+import com.example.api_beverage_shop.util.AppConstant;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

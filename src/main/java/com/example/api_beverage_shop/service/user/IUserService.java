@@ -3,6 +3,11 @@ package com.example.api_beverage_shop.service.user;
 import com.example.api_beverage_shop.dto.UserDTO;
 import com.example.api_beverage_shop.dto.request.RegisterRequest;
 
+import java.util.Optional;
+import java.util.Set;
+
 public interface IUserService {
-    UserDTO createUser(RegisterRequest userDTO);
+    public UserDTO findByMail(String email);
+
+    public UserDTO createUser(UserDTO userDTO, String passwordEncode, Set role);
 }

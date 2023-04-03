@@ -7,7 +7,7 @@ import com.example.api_beverage_shop.model.Category;
 import com.example.api_beverage_shop.model.Product;
 import com.example.api_beverage_shop.repository.ICategoryRepository;
 import com.example.api_beverage_shop.repository.IProductRepository;
-import com.example.api_beverage_shop.config.util.AppConstant;
+import com.example.api_beverage_shop.util.AppConstant;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

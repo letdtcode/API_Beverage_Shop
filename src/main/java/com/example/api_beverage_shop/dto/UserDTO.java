@@ -17,20 +17,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
+    private Long Id;
     @Length(min = 5)
     private String userName;
 
     @NotEmpty
     private String firstName;
     private String lastName;
-    private int gender;
+    private Integer gender;
     private LocalDate dateOfBirth;
     private String mail;
     private String address;
     private String phone;
     private String avatar;
     private MultipartFile imgAvatar; //lưu hình
-    private RoleDTO role;
-    private CartDTO cart;
-    private List<OrderDTO> orders;
 }
