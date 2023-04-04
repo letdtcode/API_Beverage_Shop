@@ -3,7 +3,7 @@ package com.example.api_beverage_shop.service.role;
 import com.example.api_beverage_shop.dto.RoleDTO;
 
 public interface IRoleService {
-    public RoleDTO createRole(RoleDTO roleDTO);
+    public RoleDTO createRole(String roleName);
 
-    RoleDTO findByRoleName(String roleName);
+    public RoleDTO findByRoleName(String roleName);
 }

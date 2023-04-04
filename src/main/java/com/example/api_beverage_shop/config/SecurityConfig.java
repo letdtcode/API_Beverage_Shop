@@ -9,6 +9,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -19,13 +21,19 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @RequiredArgsConstructor
 public class SecurityConfig {
     @Autowired
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    @Autowired
-    private final AuthenticationProvider authenticationProvider;
-
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+//        http.csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/v1/auth").permitAll()
+//                .and()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/v1/admin").authenticated()
+//                .and()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/v1/client").authenticated();
+//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 //        http.sessionManagement().sessionCreationPolicy(STATELESS);
 //        http.authorizeHttpRequests()
 //                .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
@@ -38,6 +46,35 @@ public class SecurityConfig {
 //                .and()
 //                .authenticationProvider(authenticationProvider)
 //                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//        http.csrf().disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/v1/auth").permitAll()
+//                .and()
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/v1/admin").authenticated()
+//                .and()
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+//                .authorizeHttpRequests()
+//                .requestMatchers("/api/v1/client").authenticated();
+
+        http
+                .csrf()
+                .disable()
+                .authorizeHttpRequests()
+                .requestMatchers("/api/v1/auth/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//                .logout()
+//                .logoutUrl("/api/v1/auth/logout")
+//                .addLogoutHandler(logoutHandler)
+//                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
         return http.build();
     }
 }

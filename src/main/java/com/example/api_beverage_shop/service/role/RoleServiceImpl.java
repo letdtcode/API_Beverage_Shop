@@ -14,17 +14,18 @@ public class RoleServiceImpl implements IRoleService {
     @Autowired
     private IRoleRepository roleRepository;
     @Autowired
-    private ModelMapper modelMapper;
+    private ModelMapper mapper;
 
     @Override
-    public RoleDTO createRole(RoleDTO roleDTO) {
-        roleRepository.save(modelMapper.map(roleDTO, Role.class));
-        return roleDTO;
+    public RoleDTO createRole(String roleName) {
+        Role role = Role.builder().roleName(roleName).build();
+        role = roleRepository.save(role);
+        return mapper.map(role, RoleDTO.class);
     }
 
     @Override
     public RoleDTO findByRoleName(String roleName) {
         Role role = roleRepository.findByRoleName(roleName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.ROLE_NOT_FOUND + roleName));
-        return modelMapper.map(role,RoleDTO.class);
+        return mapper.map(role, RoleDTO.class);
     }
 }

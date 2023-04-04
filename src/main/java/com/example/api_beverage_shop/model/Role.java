@@ -7,10 +7,10 @@ import java.util.Set;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Table(name = "Role")
 public class Role {
     @Id
