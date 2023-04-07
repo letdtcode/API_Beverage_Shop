@@ -18,6 +18,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -91,7 +93,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         String password = request.getPassword();
         UsernamePasswordAuthenticationToken authReq
                 = new UsernamePasswordAuthenticationToken(email, password);
-        authenticationManager.authenticate(authReq);
+        Authentication authentication = authenticationManager.authenticate(authReq);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
         UserDTO user = userService.findByMail(request.getEmail()); //
 
@@ -102,6 +104,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         authResponse.setRefreshToken(refresh_token);
         authResponse.setRoles(getRoleUser(access_token));
         authResponse.setUserId(user.getId());
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
         return authResponse;
     }
 

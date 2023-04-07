@@ -1,7 +1,5 @@
 package com.example.api_beverage_shop.dto;
 
-import com.example.api_beverage_shop.model.OrderItem;
-import com.example.api_beverage_shop.model.User;
 import lombok.Data;
 
 import java.math.BigDecimal;

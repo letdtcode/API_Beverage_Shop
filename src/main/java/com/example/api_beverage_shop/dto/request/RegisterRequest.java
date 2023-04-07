@@ -38,5 +38,5 @@ public class RegisterRequest {
     private String phone;
 
     @NotBlank
-    private Set<String> roles = new HashSet<>(Arrays.asList("USER"));
+    private Set<String> roles = new HashSet<>(Arrays.asList("Client"));
 }

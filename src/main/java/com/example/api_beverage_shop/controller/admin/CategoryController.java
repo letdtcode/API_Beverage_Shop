@@ -23,29 +23,31 @@ public class CategoryController {
     private final ICategoryService categoryService;
 
     @GetMapping("/categories")
-    public ResponseEntity<List<CategoryDTO>> getAllCategories(){
+    public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         List<CategoryDTO> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(categories);
     }
+
     @GetMapping("/category/{id}")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(categoryService.getCategoryById(id));
     }
 
-    @GetMapping("category")
+    @GetMapping("/category")
     public ResponseEntity<CategoryDTO> getCategoryByName(@RequestParam("name") String nameCategory) {
         return ResponseEntity.ok(categoryService.getCategoryByName(nameCategory));
     }
 
     @PostMapping("/categories")
-    public ResponseEntity<CategoryDTO> createCategory(
-            @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
         return ResponseEntity.ok(categoryService.createCategory(categoryDTO));
     }
+
     @PutMapping("/categories/{id}")
     public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) throws Exception {
-        return ResponseEntity.ok(categoryService.updateCategory(categoryDTO,id));
+        return ResponseEntity.ok(categoryService.updateCategory(categoryDTO, id));
     }
+
     @GetMapping("/{category_id}/products")
     public ResponseEntity<List<ProductDTO>> getAllProductByCategoryId(@PathVariable("category_id") Long categoryId) {
         return ResponseEntity.ok(categoryService.getAllProductByCategoryId(categoryId));
