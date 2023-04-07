@@ -6,11 +6,14 @@ import com.example.api_beverage_shop.dto.request.LoginRequest;
 import com.example.api_beverage_shop.dto.request.RegisterRequest;
 import com.example.api_beverage_shop.dto.request.TokenRefreshRequest;
 import com.example.api_beverage_shop.dto.response.AuthResponse;
+import com.example.api_beverage_shop.exception.ResourceExistException;
 import com.example.api_beverage_shop.model.Cart;
+import com.example.api_beverage_shop.repository.IUserRepository;
 import com.example.api_beverage_shop.security.CustomUserDetailsService;
 import com.example.api_beverage_shop.security.jwt.JwtServiceImpl;
 import com.example.api_beverage_shop.service.role.IRoleService;
 import com.example.api_beverage_shop.service.user.IUserService;
+import com.example.api_beverage_shop.util.AppConstant;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -37,6 +40,9 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     private IUserService userService;
 
     @Autowired
+    private IUserRepository userRepository;
+
+    @Autowired
     private IRoleService roleService;
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,6 +51,9 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
     public AuthResponse register(@RequestBody RegisterRequest request) {
 //        return userService.createUser(request);
 
+        if (userRepository.existsByMail(request.getMail())) {
+            throw new ResourceExistException(AppConstant.USER_EXIST);
+        }
         UserDTO user = new UserDTO();
         Set<RoleDTO> roles = new HashSet<>();
         Cart cart = new Cart();
@@ -84,7 +93,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
                 = new UsernamePasswordAuthenticationToken(email, password);
         authenticationManager.authenticate(authReq);
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(email);
-        UserDTO user = userService.findByMail(request.getEmail());
+        UserDTO user = userService.findByMail(request.getEmail()); //
 
         String access_token = jwtService.generateToken(userDetails);
         String refresh_token = jwtService.generateRefreshToken(userDetails);

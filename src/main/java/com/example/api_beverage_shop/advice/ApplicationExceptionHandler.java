@@ -1,5 +1,6 @@
 package com.example.api_beverage_shop.advice;
 
+import com.example.api_beverage_shop.exception.ResourceExistException;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,16 @@ public class ApplicationExceptionHandler {
         body.put("status",HttpStatus.NOT_FOUND.value());
         body.put("errors", err.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(body);
+    }
+
+    @ExceptionHandler(ResourceExistException.class)
+    public ResponseEntity<Object> handleResourceExistException(ResourceExistException err) {
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", System.currentTimeMillis());
+        body.put("status",HttpStatus.NOT_FOUND.value());
+        body.put("errors", err.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE)
                 .body(body);
     }
 }

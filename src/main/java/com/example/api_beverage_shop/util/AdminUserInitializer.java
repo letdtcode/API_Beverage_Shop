@@ -1,28 +1,24 @@
 package com.example.api_beverage_shop.util;
 
-import com.example.api_beverage_shop.dto.RoleDTO;
 import com.example.api_beverage_shop.dto.UserDTO;
-import com.example.api_beverage_shop.dto.response.AuthResponse;
-import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.Cart;
 import com.example.api_beverage_shop.model.Role;
 import com.example.api_beverage_shop.model.User;
+import com.example.api_beverage_shop.repository.ICartRepository;
 import com.example.api_beverage_shop.repository.IRoleRepository;
 import com.example.api_beverage_shop.repository.IUserRepository;
-import com.example.api_beverage_shop.service.role.IRoleService;
 import com.example.api_beverage_shop.service.user.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Component
 @AllArgsConstructor
@@ -31,8 +27,8 @@ public class AdminUserInitializer implements CommandLineRunner {
 //    @Qualifier("CustomUserDetailsService")
 //    private final UserDetailsService userDetailsService;
 
-    @Autowired
-    private final IUserService userService;
+//    @Autowired
+//    private final IUserService userService;
 
     @Autowired
     private final IRoleRepository roleRepository;
@@ -42,6 +38,9 @@ public class AdminUserInitializer implements CommandLineRunner {
 
     @Autowired
     private final IUserRepository userRepository;
+
+    @Autowired
+    private final ICartRepository cartRepository;
 
     @Override
     public void run(String... args) {
@@ -69,8 +68,22 @@ public class AdminUserInitializer implements CommandLineRunner {
             Set<Role> roles = new HashSet<>();
             roles.add(roleRepository.findByRoleName("Admin").get());
 
-            UserDTO admin = new UserDTO(null, "admin", "Duc Thanh", "Nguyen", 0, birth, "admin@gmail.com", "Cau Xay, Tan Phu, TP.HCM", "0342293128", null, null);
-            userService.createUser(admin, passwordEncoder.encode("admin"), roles);
+            User admin = User.builder()
+                    .Id(1L).userName("admin")
+                    .password(passwordEncoder.encode("admin"))
+                    .firstName("Duc Thanh")
+                    .lastName("Nguyen")
+                    .gender(1)
+                    .dateOfBirth(birth)
+                    .mail("admin@gmail.com")
+                    .address("Cau Xay, Q9, TP.HCM")
+                    .phone("0342293128")
+                    .roles(roles)
+                    .build();
+            Cart cart = Cart.builder().Id(1L).user(admin).build();
+            admin.setCart(cart);
+            cartRepository.save(cart);
+            userRepository.save(admin);
         }
     }
 }

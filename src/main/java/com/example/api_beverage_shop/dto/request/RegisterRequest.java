@@ -25,11 +25,11 @@ public class RegisterRequest {
     @NotBlank
     private String password;
 
-    @NotBlank
-    private Integer gender;
+//    @NotBlank
+//    private Integer gender;
 
-    @NotBlank
-    private LocalDate dateOfBirth;
+//    @NotBlank
+//    private LocalDate dateOfBirth;
 
     @NotBlank
     private String address;
