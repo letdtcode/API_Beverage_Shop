@@ -1,9 +1,14 @@
 package com.example.api_beverage_shop.security.jwt;
 
+import com.example.api_beverage_shop.security.CustomUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -13,10 +18,15 @@ import java.util.function.Function;
 
 
 @Service
+@RequiredArgsConstructor
 public class JwtServiceImpl implements IJwtService {
     private static final String SECRET_KEY = "thisissecret";
     private final long JWT_EXPIRATION = 10 * 60 * 1000;
     private final long REFRESH_JWT_EXPIRATION = 30 * 60 * 1000;
+
+    @Autowired
+    @Qualifier("CustomUserDetailsService")
+    private final UserDetailsService userDetailsService;
 
     @Override
     public String extractUsername(String token) {
@@ -78,4 +88,14 @@ public class JwtServiceImpl implements IJwtService {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
+//    @Override
+//    public Boolean validateToken(String token) {
+//        try {
+//            final String username = extractUsername(token);
+//            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+//            validateToken(token,userDetails);
+//            return true;
+//        } catch ()
+//    }
 }

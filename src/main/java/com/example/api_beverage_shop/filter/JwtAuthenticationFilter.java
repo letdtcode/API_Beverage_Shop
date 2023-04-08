@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -59,11 +60,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
             }
+            else if (userName == null && SecurityContextHolder.getContext().getAuthentication() != null){
+                throw new BadCredentialsException("Invalid token");
+            }
             filterChain.doFilter(request, response);
         } catch (Exception e) {
 //            ErrorMessage errorMessage = new ErrorMessage(HttpStatus.FORBIDDEN.value(), new Date(), e.getMessage(), null);
 //            response.setStatus(HttpStatus.FORBIDDEN.value());
 //            response.getWriter().write(new ObjectMapper().writeValueAsString(errorMessage));
+            throw new BadCredentialsException("Invalid token");
         }
 
     }
