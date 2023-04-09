@@ -44,8 +44,8 @@ public class ProductController {
     public ResponseEntity<ProductDTO> createProduct(
             @RequestParam("file") MultipartFile file,
             @RequestParam("model") String JsonObject) throws JsonProcessingException {
-        ProductDTO product = ProductDTO.builder().build();
-        product = objectMapper.readValue(JsonObject, ProductDTO.class);
+//        ProductDTO product = ProductDTO.builder().build();
+        ProductDTO product = objectMapper.readValue(JsonObject, ProductDTO.class);
         return ResponseEntity.ok(productService.createProduct(product, file));
     }
 

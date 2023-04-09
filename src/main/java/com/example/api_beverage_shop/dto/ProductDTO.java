@@ -21,8 +21,6 @@ public class ProductDTO {
     private String description;
     private Integer quantity;
     private Long categoryId;
-
-    private MultipartFile productImages;
-
-    private String pathImage;
+//    private MultipartFile productImages;
+    private String urlImgProduct;
 }

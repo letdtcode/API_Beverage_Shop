@@ -16,4 +16,6 @@ public interface IProductService {
     public ProductDTO updateImageForProduct(Long Id, MultipartFile file);
 
     public ProductDTO updateInfoForProduct(ProductDTO productDTO, Long id);
+
+    String getPathImgProduct(Long Id);
 }

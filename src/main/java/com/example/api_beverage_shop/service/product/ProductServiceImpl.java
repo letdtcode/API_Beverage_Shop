@@ -35,12 +35,14 @@ public class ProductServiceImpl implements IProductService {
         List<ProductDTO> productDTOList = products.stream().map(product -> productMapper.toDTO(product)).collect(Collectors.toList());
         return productDTOList;
     }
+
     @Override
     public ProductDTO getProductById(Long Id) {
         Product product = productRepository.findById(Id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND + Id));
         return productMapper.toDTO(product);
     }
+
     @Override
     public ProductDTO getProductByName(String name) {
         Product product = productRepository.findByProductName(name).orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND_WITH_NAME + name));
@@ -86,8 +88,17 @@ public class ProductServiceImpl implements IProductService {
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND + Id));
 
         Product enityCovert = productMapper.toEntity(productDTO);
-        mapper.map(enityCovert,product);
+        mapper.map(enityCovert, product);
         productRepository.save(product);
         return productMapper.toDTO(product);
+    }
+
+    @Override
+    public String getPathImgProduct(Long Id) {
+        Product product = productRepository.findById(Id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND + Id));
+
+        String pathImg = product.getPathImage();
+        return pathImg;
     }
 }

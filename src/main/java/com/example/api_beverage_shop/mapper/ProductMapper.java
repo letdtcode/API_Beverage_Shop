@@ -11,6 +11,7 @@ import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -44,10 +45,15 @@ public class ProductMapper {
     }
 
     public ProductDTO toDTO(Product product) {
-        return mapper.map(product, ProductDTO.class);
+        ProductDTO productDTO= mapper.map(product, ProductDTO.class);
+        productDTO.setUrlImgProduct(buildImgProductUrl(product.getId()));
+        return productDTO;
     }
 
     public Product toEntity(ProductDTO dto) {
         return mapper.map(dto, Product.class);
+    }
+    public String buildImgProductUrl(Long productId) {
+        return "http://localhost:8080/api/v1/client/images/products/" + productId;
     }
 }
