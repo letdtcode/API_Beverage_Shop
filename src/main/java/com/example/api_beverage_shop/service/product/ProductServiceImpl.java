@@ -5,6 +5,7 @@ import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.mapper.ProductMapper;
 import com.example.api_beverage_shop.model.Product;
 import com.example.api_beverage_shop.repository.IProductRepository;
+import com.example.api_beverage_shop.service.storage.ICloudinaryService;
 import com.example.api_beverage_shop.service.storage.IStorageService;
 import com.example.api_beverage_shop.util.AppConstant;
 import org.modelmapper.ModelMapper;
@@ -29,6 +30,9 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    private ICloudinaryService cloudinaryService;
+
     @Override
     public List<ProductDTO> getAllProducts() {
         List<Product> products = productRepository.findAll();
@@ -51,16 +55,19 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO, MultipartFile file) {
-        //Luu anh san pham
-        UUID uuid = UUID.randomUUID();
-        String id = uuid.toString();
-        String path = storageService.getStorageFilename(file, id);
-        storageService.store(file, path);
-
         Product product = productMapper.toEntity(productDTO);
-        product.setPathImage(path);
+        if (productDTO.getIsSaveCloud()) {
+            String pathImage = cloudinaryService.store(file);
+            product.setPathImage(pathImage);
+        } else {
+            //Luu anh san pham
+            UUID uuid = UUID.randomUUID();
+            String id = uuid.toString();
+            String path = storageService.getStorageFilename(file, id);
+            product.setPathImage(path);
+            storageService.store(file, path);
+        }
         product = productRepository.save(product);
-
         return productMapper.toDTO(product);
     }
 
