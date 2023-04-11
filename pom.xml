@@ -15,6 +15,7 @@
     <description>API_Beverage_Shop</description>
     <properties>
         <java.version>17</java.version>
+        <start-class>com.example.api_beverage_shop.ApiBeverageShopApplication</start-class>
     </properties>
     <dependencies>
 
@@ -26,6 +27,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <!--            <version>3.0.4 RELEASE</version>-->
         </dependency>
         <!--        Dev tool-->
         <dependency>
@@ -115,26 +117,92 @@
             <version>2.3.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-assembly-plugin -->
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <version>3.3.0</version>
+        </dependency>
 
+        <!--        Cloudinary-->
+
+        <!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44 -->
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.32.2</version>
+        </dependency>
 
     </dependencies>
 
     <build>
+        <!--        <plugins>-->
+        <!--            <plugin>-->
+        <!--                <groupId>org.apache.maven.plugins</groupId>-->
+        <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+        <!--                <version>3.8.1</version>-->
+        <!--                <configuration>-->
+        <!--                    <skip>true</skip>-->
+        <!--                    <source>1.8</source>-->
+        <!--                    <target>1.8</target>-->
+        <!--                </configuration>-->
+        <!--            </plugin>-->
+
+        <!--            <plugin>-->
+        <!--                <groupId>org.apache.maven.plugins</groupId>-->
+        <!--                <artifactId>maven-assembly-plugin</artifactId>-->
+        <!--                <version>3.1.1</version>-->
+        <!--                <configuration>-->
+        <!--&lt;!&ndash;                    <skip>true</skip>&ndash;&gt;-->
+        <!--                    <archive>-->
+        <!--                        <manifest>-->
+        <!--                            <mainClass>com.example.api_beverage_shop.ApiBeverageShopApplication</mainClass>-->
+        <!--                        </manifest>-->
+        <!--                    </archive>-->
+        <!--                    <descriptorRefs>-->
+        <!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
+        <!--                    </descriptorRefs>-->
+        <!--                </configuration>-->
+        <!--                <executions>-->
+        <!--                    <execution>-->
+        <!--                        <id>make-assembly</id>-->
+        <!--                        <phase>package</phase>-->
+        <!--                        <goals>-->
+        <!--                            <goal>single</goal>-->
+        <!--                        </goals>-->
+        <!--                    </execution>-->
+        <!--                </executions>-->
+        <!--            </plugin>-->
+        <!--        </plugins>-->
+
+        <!--        Last-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${project.parent.version}</version>
+                <version>3.0.4</version>
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
+                    <mainClass>${start-class}</mainClass>
+                    <!--                    <skip>true</skip>-->
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <skipTests>true</skipTests>
                 </configuration>
             </plugin>
         </plugins>
-    </build>
 
+    </build>
 </project>
