@@ -46,14 +46,14 @@ public class ProductMapper {
 
     public ProductDTO toDTO(Product product) {
         ProductDTO productDTO= mapper.map(product, ProductDTO.class);
-        productDTO.setUrlImgProduct(buildImgProductUrl(product.getId()));
+//        productDTO.setUrlImgProduct(buildImgProductUrl(product.getId()));
         return productDTO;
     }
 
     public Product toEntity(ProductDTO dto) {
         return mapper.map(dto, Product.class);
     }
-    public String buildImgProductUrl(Long productId) {
-        return "http://localhost:8080/api/v1/client/images/products/" + productId;
-    }
+//    public String buildImgProductUrl(Long productId) {
+//        return "http://localhost:8080/api/v1/client/images/products/" + productId;
+//    }
 }
