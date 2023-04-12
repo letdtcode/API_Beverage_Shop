@@ -5,10 +5,12 @@ import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.ICartRepository;
 import com.example.api_beverage_shop.repository.IUserRepository;
+import com.example.api_beverage_shop.service.storage.ICloudinaryService;
 import com.example.api_beverage_shop.util.AppConstant;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +26,9 @@ public class UserServiceImpl implements IUserService {
     private IUserRepository userRepository;
     @Autowired
     private ICartRepository cartRepository;
+
+    @Autowired
+    private ICloudinaryService cloudinaryService;
 
     @Override
     public UserDTO findByMail(String email) {
@@ -66,7 +71,35 @@ public class UserServiceImpl implements IUserService {
     public List<UserDTO> getAllUser() {
         List<User> users = userRepository.findAll();
         List<UserDTO> userDTOList =
-                users.stream().map(user -> mapper.map(users, UserDTO.class)).collect(Collectors.toList());
+                users.stream().map(user -> mapper.map(user, UserDTO.class)).collect(Collectors.toList());
         return userDTOList;
+    }
+
+    @Override
+    public UserDTO findUserById(Long id) {
+        User user = userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(AppConstant.MAIL_NOT_FOUND + id));
+        return mapper.map(user, UserDTO.class);
+    }
+
+    @Override
+    public UserDTO updateUser(UserDTO userDTO, Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_NOT_FOUND + id));
+
+        User enityCovert = mapper.map(userDTO, User.class);
+        mapper.map(enityCovert, user);
+        user = userRepository.save(user);
+        return mapper.map(user, UserDTO.class);
+    }
+
+    @Override
+    public UserDTO updateImageProfile(MultipartFile file, Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_NOT_FOUND + id));
+
+        String pathImage = cloudinaryService.store(file);
+        user.setAvatar(pathImage);
+        user = userRepository.save(user);
+        return mapper.map(user, UserDTO.class);
     }
 }

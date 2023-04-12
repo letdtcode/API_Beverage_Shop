@@ -1,5 +1,7 @@
 package com.example.api_beverage_shop.filter;
 
+import com.example.api_beverage_shop.exception.JWTException;
+import com.example.api_beverage_shop.exception.NotCredentialException;
 import com.example.api_beverage_shop.security.CustomUserDetailsService;
 import com.example.api_beverage_shop.security.jwt.JwtServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -61,14 +63,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
             else if (userName == null && SecurityContextHolder.getContext().getAuthentication() != null){
-                throw new BadCredentialsException("Invalid token");
+                throw new NotCredentialException("Invalid token");
             }
             filterChain.doFilter(request, response);
         } catch (Exception e) {
 //            ErrorMessage errorMessage = new ErrorMessage(HttpStatus.FORBIDDEN.value(), new Date(), e.getMessage(), null);
 //            response.setStatus(HttpStatus.FORBIDDEN.value());
 //            response.getWriter().write(new ObjectMapper().writeValueAsString(errorMessage));
-            throw new BadCredentialsException("Invalid token");
+            throw new JWTException("Invalid token");
         }
 
     }

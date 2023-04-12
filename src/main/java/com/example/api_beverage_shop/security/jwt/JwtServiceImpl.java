@@ -1,8 +1,10 @@
 package com.example.api_beverage_shop.security.jwt;
 
+import com.example.api_beverage_shop.exception.JWTException;
 import com.example.api_beverage_shop.security.CustomUserDetailsService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +47,13 @@ public class JwtServiceImpl implements IJwtService {
 
     @Override
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
+        try {
+            final Claims claims = extractAllClaims(token);
+            return claimsResolver.apply(claims);
+        } catch (MalformedJwtException ex) {
+            throw new JWTException(ex.getMessage());
+        }
+
     }
 
     @Override

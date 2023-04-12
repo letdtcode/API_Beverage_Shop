@@ -11,4 +11,5 @@ public class AppConstant {
     public static final String FILE_IS_NULL = "File images is null";
     public static final String PRODUCT_NOT_FOUND_WITH_NAME = "Not found Product with name: ";
     public static final String MAIL_NOT_FOUND = "Not found mail with: ";
+    public static final String USER_NOT_FOUND = "Not found user with id: ";
 }

@@ -57,9 +57,11 @@ public class ProductServiceImpl implements IProductService {
     public ProductDTO createProduct(ProductDTO productDTO, MultipartFile file) {
         Product product = productMapper.toEntity(productDTO);
         if (productDTO.getIsSaveCloud()) {
+//            Luu tren cloud
             String pathImage = cloudinaryService.store(file);
             product.setPathImage(pathImage);
         } else {
+//            Luu trong file system
             //Luu anh san pham
             UUID uuid = UUID.randomUUID();
             String id = uuid.toString();

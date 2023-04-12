@@ -30,5 +30,6 @@ public class UserDTO {
     private String address;
     private String phone;
     private String avatar;
-    private MultipartFile imgAvatar; //lưu hình
+//    private MultipartFile imgAvatar;
+    //lưu hình
 }
