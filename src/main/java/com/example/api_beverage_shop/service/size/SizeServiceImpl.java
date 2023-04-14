@@ -1,7 +1,26 @@
 package com.example.api_beverage_shop.service.size;
 
+import com.example.api_beverage_shop.dto.SizeDTO;
+import com.example.api_beverage_shop.model.Size;
+import com.example.api_beverage_shop.repository.ISizeRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SizeServiceImpl implements ISizeService{
+    @Autowired
+    private ISizeRepository sizeRepository;
+
+    @Autowired
+    private ModelMapper mapper;
+
+    @Override
+    public SizeDTO createSize(SizeDTO sizeDTO) {
+        Size size = Size.builder().build();
+        BeanUtils.copyProperties(sizeDTO, size);
+        size = sizeRepository.save(size);
+        return mapper.map(size, SizeDTO.class);
+    }
 }

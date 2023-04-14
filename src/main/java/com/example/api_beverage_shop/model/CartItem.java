@@ -9,6 +9,8 @@ import java.util.List;
 @Setter
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cartItem")
 public class CartItem {

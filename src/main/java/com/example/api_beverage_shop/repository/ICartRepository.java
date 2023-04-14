@@ -5,4 +5,5 @@ import com.example.api_beverage_shop.model.CartItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ICartRepository extends JpaRepository<Cart, Long> {
+    public Cart findCartById(Long Id);
 }

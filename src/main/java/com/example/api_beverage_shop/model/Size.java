@@ -1,18 +1,16 @@
 package com.example.api_beverage_shop.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Setter
 @Getter
-@ToString
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "Size")
 public class Size {
     @Id
@@ -23,5 +21,5 @@ public class Size {
     private String sizeName;
 
     @Column(name = "pricePlus")
-    private BigDecimal pricePlus;
+    private Integer pricePlus;
 }

@@ -23,5 +23,5 @@ public class Topping {
     private String toppingName;
 
     @Column(name = "toppingPrice")
-    private BigDecimal toppingPrice;
+    private Integer toppingPrice;
 }
