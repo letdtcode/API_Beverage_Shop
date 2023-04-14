@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -40,7 +41,7 @@ public class UserServiceImpl implements IUserService {
     public UserDTO createUser(UserDTO userDTO, String passwordEncode, Set role) {
         User user = mapper.map(userDTO, User.class);
 //        Cart cart = Cart.builder().user(user).build();
-        Cart cart = Cart.builder().user(user).build();
+        Cart cart = Cart.builder().user(user).totalPrice(BigDecimal.valueOf(0)).build();
 //        cart.setUser(user);
         Set<Role> roles = new HashSet<>();
         for (Object obj : role) {

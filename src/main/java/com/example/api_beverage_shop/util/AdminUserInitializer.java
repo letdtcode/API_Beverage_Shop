@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
@@ -82,7 +83,7 @@ public class AdminUserInitializer implements CommandLineRunner {
                     .phone("0342293128")
                     .roles(roles)
                     .build();
-            Cart cart = Cart.builder().Id(1L).user(admin).build();
+            Cart cart = Cart.builder().Id(1L).totalPrice(BigDecimal.valueOf(0)).user(admin).build();
             admin.setCart(cart);
             cartRepository.save(cart);
             userRepository.save(admin);
