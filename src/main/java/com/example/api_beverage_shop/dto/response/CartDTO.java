@@ -1,5 +1,6 @@
-package com.example.api_beverage_shop.dto;
+package com.example.api_beverage_shop.dto.response;
 
+import com.example.api_beverage_shop.dto.CartItemDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

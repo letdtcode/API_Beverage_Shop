@@ -1,6 +1,7 @@
 package com.example.api_beverage_shop.service.cart;
 
-import com.example.api_beverage_shop.dto.CartDTO;
+import com.example.api_beverage_shop.dto.request.AddCartRequest;
+import com.example.api_beverage_shop.dto.response.CartDTO;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.*;
@@ -35,16 +36,22 @@ public class CartServiceImpl implements ICartService {
     private ModelMapper mapper;
 
     @Override
-    public CartDTO creatNewProductInCart(Long userId, String productName, Integer quantity, List<String> toppingNameList, String sizeName) {
+    public CartDTO creatNewProductInCart(AddCartRequest cartRequest) {
+        Long userId = cartRequest.getUserId();
+        String productName = cartRequest.getProductName();
+        Integer quantity = cartRequest.getQuantity();
+        List<String> toppingNameList = cartRequest.getToppingNameList();
+        String sizeName = cartRequest.getSizeName();
+
         Long cartId = userId;
         Product product = productRepository.findByProductName(productName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND + productName));
         Cart cartUser = cartRepository.findCartById(cartId);
         List<Topping> toppingList = new ArrayList<>();
         for (String nameTopping : toppingNameList) {
-            Topping topping = toppingRepository.findByToppingName(nameTopping);
+            Topping topping = toppingRepository.findByToppingName(nameTopping).orElseThrow(() -> new ResourceNotFoundException(AppConstant.TOPPING_NOT_FOUND + nameTopping));
             toppingList.add(topping);
         }
-        Size size = sizeRepository.findBySizeName(sizeName);
+        Size size = sizeRepository.findBySizeName(sizeName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.Size_NOT_FOUND + sizeName));
 
 
         BigDecimal quantityCovert = new BigDecimal(quantity);
