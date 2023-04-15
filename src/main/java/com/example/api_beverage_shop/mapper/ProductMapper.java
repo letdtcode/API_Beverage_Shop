@@ -1,17 +1,16 @@
 package com.example.api_beverage_shop.mapper;
 
-import com.example.api_beverage_shop.util.AppConstant;
 import com.example.api_beverage_shop.dto.ProductDTO;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.Category;
 import com.example.api_beverage_shop.model.Product;
 import com.example.api_beverage_shop.repository.ICategoryRepository;
+import com.example.api_beverage_shop.util.AppConstant;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MappingContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -35,17 +34,12 @@ public class ProductMapper {
     @PostConstruct
     public void init() {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        mapper.createTypeMap(Product.class, ProductDTO.class)
-                .addMappings(mapper -> mapper.using(categoryToCategoryIdConverter)
-                        .map(Product::getCategory, ProductDTO::setCategoryId));
-        mapper.createTypeMap(ProductDTO.class, Product.class)
-                .setPropertyCondition(Conditions.isNotNull())
-                .addMappings(mapper -> mapper.using(categoryIdToCategoryConverter)
-                        .map(ProductDTO::getCategoryId, Product::setCategory));
+        mapper.createTypeMap(Product.class, ProductDTO.class).addMappings(mapper -> mapper.using(categoryToCategoryIdConverter).map(Product::getCategory, ProductDTO::setCategoryId));
+        mapper.createTypeMap(ProductDTO.class, Product.class).setPropertyCondition(Conditions.isNotNull()).addMappings(mapper -> mapper.using(categoryIdToCategoryConverter).map(ProductDTO::getCategoryId, Product::setCategory));
     }
 
     public ProductDTO toDTO(Product product) {
-        ProductDTO productDTO= mapper.map(product, ProductDTO.class);
+        ProductDTO productDTO = mapper.map(product, ProductDTO.class);
 //        productDTO.setUrlImgProduct(buildImgProductUrl(product.getId()));
         return productDTO;
     }

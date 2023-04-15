@@ -26,7 +26,7 @@ public class CartItem {
     @JoinColumn(name = "cartId")
     private Cart cart;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "cartItem_topping",
             joinColumns = {@JoinColumn(name = "cartItemId", referencedColumnName = "Id")},

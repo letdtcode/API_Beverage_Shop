@@ -1,11 +1,13 @@
 package com.example.api_beverage_shop.service.cart;
 
+import com.example.api_beverage_shop.dto.CartItemDTO;
 import com.example.api_beverage_shop.dto.request.AddCartRequest;
-import com.example.api_beverage_shop.dto.response.CartDTO;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
+import com.example.api_beverage_shop.mapper.CartItemMapper;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.*;
 import com.example.api_beverage_shop.util.AppConstant;
+import lombok.extern.java.Log;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,8 +37,11 @@ public class CartServiceImpl implements ICartService {
     @Autowired
     private ModelMapper mapper;
 
+    @Autowired
+    private CartItemMapper cartItemMapper;
+
     @Override
-    public CartDTO creatNewProductInCart(AddCartRequest cartRequest) {
+    public CartItemDTO creatNewProductInCart(AddCartRequest cartRequest) {
         Long userId = cartRequest.getUserId();
         String productName = cartRequest.getProductName();
         Integer quantity = cartRequest.getQuantity();
@@ -72,7 +77,7 @@ public class CartServiceImpl implements ICartService {
         cartItem.setTotalPriceProduct(totalPriceProduct);
         cartItem = cartItemRepository.save(cartItem);
 
-        Cart cart = cartRepository.findCartById(cartId);
-        return mapper.map(cart, CartDTO.class);
+//        logger.ser("errormap",cartItemMapper.toDTO(cartItem));
+        return cartItemMapper.toDTO(cartItem);
     }
 }
