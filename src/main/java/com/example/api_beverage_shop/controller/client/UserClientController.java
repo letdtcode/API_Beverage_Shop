@@ -31,7 +31,7 @@ public class UserClientController {
     }
 
     @PutMapping("/user/img/{id}")
-        public ResponseEntity<?> updateImageUser(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id) {
+    public ResponseEntity<?> updateImageUser(@RequestParam("file") MultipartFile file, @PathVariable("id") Long id) {
         return ResponseEntity.ok(userService.updateImageProfile(file, id));
     }
 

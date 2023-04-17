@@ -7,14 +7,13 @@ import com.example.api_beverage_shop.mapper.CartItemMapper;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.*;
 import com.example.api_beverage_shop.util.AppConstant;
-import lombok.extern.java.Log;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CartServiceImpl implements ICartService {
@@ -33,9 +32,6 @@ public class CartServiceImpl implements ICartService {
 
     @Autowired
     private ISizeRepository sizeRepository;
-
-    @Autowired
-    private ModelMapper mapper;
 
     @Autowired
     private CartItemMapper cartItemMapper;
@@ -84,5 +80,11 @@ public class CartServiceImpl implements ICartService {
 
 //        logger.ser("errormap",cartItemMapper.toDTO(cartItem));
         return cartItemMapper.toDTO(cartItem);
+    }
+
+    @Override
+    public List<CartItemDTO> getAllCartItemInfo(Long userId) {
+        List<CartItem> cartItemList = cartItemRepository.findByCartId(userId);
+        return cartItemList.stream().map(cartItem -> cartItemMapper.toDTO(cartItem)).collect(Collectors.toList());
     }
 }

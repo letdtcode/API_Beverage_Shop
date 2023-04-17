@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface ICartService {
     public CartItemDTO creatNewProductInCart(AddCartRequest cartRequest);
+
+    List<CartItemDTO> getAllCartItemInfo(Long userId);
 }

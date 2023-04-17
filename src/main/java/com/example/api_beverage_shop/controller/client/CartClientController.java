@@ -2,16 +2,14 @@ package com.example.api_beverage_shop.controller.client;
 
 import com.example.api_beverage_shop.dto.CartItemDTO;
 import com.example.api_beverage_shop.dto.request.AddCartRequest;
-import com.example.api_beverage_shop.dto.response.CartDTO;
-import com.example.api_beverage_shop.model.CartItem;
 import com.example.api_beverage_shop.service.cart.ICartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/client")
@@ -23,9 +21,11 @@ public class CartClientController {
 
     @PostMapping("/cart/addproduct")
     public ResponseEntity<CartItemDTO> creatNewProductInCart(@RequestBody AddCartRequest addCartRequest) {
-//        ProductDTO product = ProductDTO.builder().build();
         return ResponseEntity.ok(cartService.creatNewProductInCart(addCartRequest));
     }
 
-
+    @GetMapping("/cart/items")
+    public ResponseEntity<List<CartItemDTO>> getAllCartItemInfo(@Param("userId") Long userId) {
+        return ResponseEntity.ok(cartService.getAllCartItemInfo(userId));
+    }
 }

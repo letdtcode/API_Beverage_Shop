@@ -3,18 +3,18 @@ package com.example.api_beverage_shop.service.order;
 import com.example.api_beverage_shop.dto.OrderDTO;
 import com.example.api_beverage_shop.dto.request.CheckOutCartRequest;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
+import com.example.api_beverage_shop.mapper.OrderMapper;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.*;
 import com.example.api_beverage_shop.util.AppConstant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-public class OrderServiceImpl {
+public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     private IOrderRepository orderRepository;
@@ -32,7 +32,10 @@ public class OrderServiceImpl {
     @Autowired
     private ICartRepository cartRepository;
 
+    @Autowired
+    private OrderMapper orderMapper;
 
+    @Override
     public OrderDTO checkOut(CheckOutCartRequest request) {
         Long userId = request.getUserId();
         String address = request.getAddress();
@@ -79,7 +82,7 @@ public class OrderServiceImpl {
             orderItemRepository.save(orderItem);
         }
         resetCartUser(userId);
-        return null;
+        return orderMapper.toDTO(orderBill);
     }
 
     private void resetCartUser(Long cardId) {
