@@ -77,6 +77,11 @@ public class CartServiceImpl implements ICartService {
         cartItem.setTotalPriceProduct(totalPriceProduct);
         cartItem = cartItemRepository.save(cartItem);
 
+//        Xử lý cập nhật lại tổng tiền trong cart
+        BigDecimal totalPriceInCart = cartUser.getTotalPrice();
+        cartUser.setTotalPrice(totalPriceInCart.add(totalPriceItem));
+        cartRepository.save(cartUser);
+
 //        logger.ser("errormap",cartItemMapper.toDTO(cartItem));
         return cartItemMapper.toDTO(cartItem);
     }
