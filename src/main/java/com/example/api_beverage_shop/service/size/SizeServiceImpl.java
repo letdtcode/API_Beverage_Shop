@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SizeServiceImpl implements ISizeService {
@@ -32,5 +33,12 @@ public class SizeServiceImpl implements ISizeService {
         BeanUtils.copyProperties(sizeDTO, size);
         size = sizeRepository.save(size);
         return mapper.map(size, SizeDTO.class);
+    }
+
+    @Override
+    public List<SizeDTO> getAllSizeInfo() {
+        List<Size> sizeList = sizeRepository.findAll();
+        List<SizeDTO> sizeDTOList = sizeList.stream().map(size -> mapper.map(size, SizeDTO.class)).collect(Collectors.toList());
+        return sizeDTOList;
     }
 }
