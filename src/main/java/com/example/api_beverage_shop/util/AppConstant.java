@@ -16,5 +16,6 @@ public class AppConstant {
     public static final String TOPPING_EXIST = "This topping already exist in database";
     public static final String TOPPING_NOT_FOUND = "Not found topping with name: ";
     public static final String CART_NOT_FOUND = "Not found cart with id: ";
+    public static final String DISCOUNT_NOT_FOUND_WITH_CODE = "Not found Discount with code:";
     public static String Size_NOT_FOUND = "Not found Size with name: ";
 }

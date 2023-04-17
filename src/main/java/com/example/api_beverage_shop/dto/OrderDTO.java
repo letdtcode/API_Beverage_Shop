@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDTO {
+    private Long Id;
     private String nameCustomer;
     private String phoneNumber;
     private String address;
@@ -17,7 +18,7 @@ public class OrderDTO {
     private int payment;
     private BigDecimal totalItemPrice;
     private BigDecimal totalPrice;
-    private DiscountDTO discount;
-    private UserDTO user;
-    private List<OrderItemDTO> orderItems;
+    private String discountCode;
+    private Long userId;
+//    private List<OrderItemDTO> orderItems;
 }

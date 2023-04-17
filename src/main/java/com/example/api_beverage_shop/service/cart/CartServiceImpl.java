@@ -50,7 +50,7 @@ public class CartServiceImpl implements ICartService {
 
         Long cartId = userId;
         Product product = productRepository.findByProductName(productName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND + productName));
-        Cart cartUser = cartRepository.findCartById(cartId);
+        Cart cartUser = cartRepository.findCartById(cartId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + cartId));
         List<Topping> toppingList = new ArrayList<>();
         for (String nameTopping : toppingNameList) {
             Topping topping = toppingRepository.findByToppingName(nameTopping).orElseThrow(() -> new ResourceNotFoundException(AppConstant.TOPPING_NOT_FOUND + nameTopping));

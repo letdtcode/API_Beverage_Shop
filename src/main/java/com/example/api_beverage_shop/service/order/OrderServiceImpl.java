@@ -4,10 +4,7 @@ import com.example.api_beverage_shop.dto.OrderDTO;
 import com.example.api_beverage_shop.dto.request.CheckOutCartRequest;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.*;
-import com.example.api_beverage_shop.repository.ICartItemRepository;
-import com.example.api_beverage_shop.repository.IOrderItemRepository;
-import com.example.api_beverage_shop.repository.IOrderRepository;
-import com.example.api_beverage_shop.repository.IUserRepository;
+import com.example.api_beverage_shop.repository.*;
 import com.example.api_beverage_shop.util.AppConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -30,6 +27,10 @@ public class OrderServiceImpl {
 
     @Autowired
     private ICartItemRepository cartItemRepository;
+
+
+    @Autowired
+    private ICartRepository cartRepository;
 
 
     public OrderDTO checkOut(CheckOutCartRequest request) {
@@ -77,6 +78,20 @@ public class OrderServiceImpl {
 
             orderItemRepository.save(orderItem);
         }
+        resetCartUser(userId);
+        return null;
     }
 
+    private void resetCartUser(Long cardId) {
+//        Delete All Cart Item
+        List<CartItem> cartItemList = cartItemRepository.findByCartId(cardId);
+        for (CartItem item : cartItemList) {
+            cartItemRepository.delete(item);
+        }
+
+//        Reset total price of cart user
+        Cart cartUser = cartRepository.findCartById(cardId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + cardId));
+        cartUser.setTotalPrice(BigDecimal.valueOf(0));
+        cartRepository.save(cartUser);
+    }
 }
