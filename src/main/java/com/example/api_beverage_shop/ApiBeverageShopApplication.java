@@ -41,6 +41,7 @@ public class ApiBeverageShopApplication {
         config.put("api_key", "725286843731793");
         config.put("api_secret", "vlXQhzYH_ngfJqQHo5As0LAC0gc");
         config.put("secure", true);
+
         return new Cloudinary(config);
     }
 
