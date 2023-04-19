@@ -30,11 +30,6 @@ public class ProductClientController {
         return ResponseEntity.ok(products);
     }
 
-    //    @GetMapping("/images/{filename:.+}")
-//    public ResponseEntity<Resource> getProductImage(@PathVariable String filename) {
-//        Resource file = storageService.loadAsResource(filename);
-//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=\""+file.getFilename()+"\"").body(file);
-//    }
     @GetMapping("/images/products/{Id}")
     @ResponseBody
     public ResponseEntity<Resource> getProductImage(@PathVariable Long Id, HttpServletRequest request) {
@@ -51,10 +46,4 @@ public class ProductClientController {
         }
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(file);
     }
-
-//    @GetMapping("/images/{filename:.+}")
-//    public ResponseEntity<Resource> getProductImage(@PathVariable String filename) {
-//        Resource file = storageService.loadAsResource(filename);
-//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,"attachment;filename=\""+file.getFilename()+"\"").body(file);
-//    }
 }
