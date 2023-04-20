@@ -1,7 +1,7 @@
 package com.example.api_beverage_shop.service.cart;
 
-import com.example.api_beverage_shop.dto.response.CartItemResponse;
-import com.example.api_beverage_shop.dto.request.AddCartRequest;
+import com.example.api_beverage_shop.dto.response.cart.CartItemResponse;
+import com.example.api_beverage_shop.dto.request.cart.AddCartRequest;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.mapper.CartItemMapper;
 import com.example.api_beverage_shop.model.*;

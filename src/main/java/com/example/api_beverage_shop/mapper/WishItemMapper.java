@@ -1,6 +1,6 @@
 package com.example.api_beverage_shop.mapper;
 
-import com.example.api_beverage_shop.dto.response.WishItemResponse;
+import com.example.api_beverage_shop.dto.response.wish.WishItemResponse;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.Product;
 import com.example.api_beverage_shop.model.WishItem;

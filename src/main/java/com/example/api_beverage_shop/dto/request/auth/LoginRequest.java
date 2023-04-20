@@ -1,4 +1,4 @@
-package com.example.api_beverage_shop.dto.request;
+package com.example.api_beverage_shop.dto.request.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

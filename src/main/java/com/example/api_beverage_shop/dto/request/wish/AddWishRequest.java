@@ -1,4 +1,4 @@
-package com.example.api_beverage_shop.dto.request;
+package com.example.api_beverage_shop.dto.request.wish;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,7 +1,7 @@
 package com.example.api_beverage_shop.controller.client;
 
 import com.example.api_beverage_shop.dto.OrderDTO;
-import com.example.api_beverage_shop.dto.request.CheckOutCartRequest;
+import com.example.api_beverage_shop.dto.request.cart.CheckOutCartRequest;
 import com.example.api_beverage_shop.service.order.IOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,14 +2,10 @@ package com.example.api_beverage_shop.controller.admin;
 
 import com.example.api_beverage_shop.dto.CategoryDTO;
 import com.example.api_beverage_shop.dto.ProductDTO;
-import com.example.api_beverage_shop.dto.request.RegisterRequest;
-import com.example.api_beverage_shop.security.auth.IAuthenticationService;
 import com.example.api_beverage_shop.service.category.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

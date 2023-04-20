@@ -1,20 +1,14 @@
 package com.example.api_beverage_shop.controller;
 
-import com.example.api_beverage_shop.dto.request.*;
-import com.example.api_beverage_shop.dto.response.AuthResponse;
+import com.example.api_beverage_shop.dto.request.auth.LoginRequest;
+import com.example.api_beverage_shop.dto.request.auth.RegisterRequest;
+import com.example.api_beverage_shop.dto.request.auth.TokenRefreshRequest;
 import com.example.api_beverage_shop.security.auth.IAuthenticationService;
-import com.example.api_beverage_shop.service.product.IProductService;
-import com.example.api_beverage_shop.service.storage.IStorageService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/auth")

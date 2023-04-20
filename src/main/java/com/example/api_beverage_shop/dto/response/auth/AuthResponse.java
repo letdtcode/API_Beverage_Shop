@@ -1,4 +1,4 @@
-package com.example.api_beverage_shop.dto.response;
+package com.example.api_beverage_shop.dto.response.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
