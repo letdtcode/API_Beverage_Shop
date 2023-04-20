@@ -1,11 +1,9 @@
 package com.example.api_beverage_shop.mapper;
 
-import com.example.api_beverage_shop.dto.CartItemDTO;
 import com.example.api_beverage_shop.dto.OrderDTO;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.IDiscountRepository;
-import com.example.api_beverage_shop.repository.IProductRepository;
 import com.example.api_beverage_shop.repository.IUserRepository;
 import com.example.api_beverage_shop.util.AppConstant;
 import jakarta.annotation.PostConstruct;

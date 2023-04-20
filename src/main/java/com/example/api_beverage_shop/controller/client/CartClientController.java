@@ -1,6 +1,6 @@
 package com.example.api_beverage_shop.controller.client;
 
-import com.example.api_beverage_shop.dto.CartItemDTO;
+import com.example.api_beverage_shop.dto.response.CartItemResponse;
 import com.example.api_beverage_shop.dto.request.AddCartRequest;
 import com.example.api_beverage_shop.service.cart.ICartService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +20,12 @@ public class CartClientController {
     private final ICartService cartService;
 
     @PostMapping("/cart/addproduct")
-    public ResponseEntity<CartItemDTO> creatNewProductInCart(@RequestBody AddCartRequest addCartRequest) {
+    public ResponseEntity<CartItemResponse> creatNewProductInCart(@RequestBody AddCartRequest addCartRequest) {
         return ResponseEntity.ok(cartService.creatNewProductInCart(addCartRequest));
     }
 
     @GetMapping("/cart/items")
-    public ResponseEntity<List<CartItemDTO>> getAllCartItemInfo(@Param("userId") Long userId) {
+    public ResponseEntity<List<CartItemResponse>> getAllCartItemInfo(@Param("userId") Long userId) {
         return ResponseEntity.ok(cartService.getAllCartItemInfo(userId));
     }
 }

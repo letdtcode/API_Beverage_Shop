@@ -2,13 +2,8 @@ package com.example.api_beverage_shop.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -65,6 +60,10 @@ public class User {
     //Two way mapping
     @OneToOne(mappedBy = "user")
     private Cart cart;
+
+    //Two way mapping
+    @OneToOne(mappedBy = "user")
+    private WishList wishList;
 
     @OneToMany(mappedBy = "userOrder")
     private List<Order> orderList;

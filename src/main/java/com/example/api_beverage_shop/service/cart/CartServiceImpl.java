@@ -1,6 +1,6 @@
 package com.example.api_beverage_shop.service.cart;
 
-import com.example.api_beverage_shop.dto.CartItemDTO;
+import com.example.api_beverage_shop.dto.response.CartItemResponse;
 import com.example.api_beverage_shop.dto.request.AddCartRequest;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.mapper.CartItemMapper;
@@ -37,7 +37,7 @@ public class CartServiceImpl implements ICartService {
     private CartItemMapper cartItemMapper;
 
     @Override
-    public CartItemDTO creatNewProductInCart(AddCartRequest cartRequest) {
+    public CartItemResponse creatNewProductInCart(AddCartRequest cartRequest) {
         Long userId = cartRequest.getUserId();
         String productName = cartRequest.getProductName();
         Integer quantity = cartRequest.getQuantity();
@@ -83,7 +83,7 @@ public class CartServiceImpl implements ICartService {
     }
 
     @Override
-    public List<CartItemDTO> getAllCartItemInfo(Long userId) {
+    public List<CartItemResponse> getAllCartItemInfo(Long userId) {
         List<CartItem> cartItemList = cartItemRepository.findByCartId(userId);
         return cartItemList.stream().map(cartItem -> cartItemMapper.toDTO(cartItem)).collect(Collectors.toList());
     }

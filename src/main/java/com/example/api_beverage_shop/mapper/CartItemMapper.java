@@ -1,6 +1,6 @@
 package com.example.api_beverage_shop.mapper;
 
-import com.example.api_beverage_shop.dto.CartItemDTO;
+import com.example.api_beverage_shop.dto.response.CartItemResponse;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.ICartRepository;
@@ -11,14 +11,11 @@ import com.example.api_beverage_shop.util.AppConstant;
 import jakarta.annotation.PostConstruct;
 import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
-import org.modelmapper.MappingException;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.ErrorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -90,41 +87,41 @@ public class CartItemMapper {
     @PostConstruct
     public void init() {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        mapper.createTypeMap(CartItem.class, CartItemDTO.class)
+        mapper.createTypeMap(CartItem.class, CartItemResponse.class)
                 .addMappings(mapper -> mapper.using(productToProductNameConverter)
-                        .map(CartItem::getProduct, CartItemDTO::setProductName))
+                        .map(CartItem::getProduct, CartItemResponse::setProductName))
 
                 .addMappings(mapper -> mapper.using(toppingToToppingNameConverter)
-                        .map(CartItem::getToppings, CartItemDTO::setToppingName))
+                        .map(CartItem::getToppings, CartItemResponse::setToppingName))
 
                 .addMappings(mapper -> mapper.using(sizeToSizeNameConverter)
-                        .map(CartItem::getSizeProduct, CartItemDTO::setSizeName))
+                        .map(CartItem::getSizeProduct, CartItemResponse::setSizeName))
 
                 .addMappings(mapper -> mapper.using(cartToCartIdConverter)
-                        .map(CartItem::getCart, CartItemDTO::setCartId));
+                        .map(CartItem::getCart, CartItemResponse::setCartId));
 
 
-        mapper.createTypeMap(CartItemDTO.class, CartItem.class)
+        mapper.createTypeMap(CartItemResponse.class, CartItem.class)
                 .setPropertyCondition(Conditions.isNotNull())
                 .addMappings(mapper -> mapper.using(productNameToProductConverter)
-                        .map(CartItemDTO::getProductName, CartItem::setProduct))
+                        .map(CartItemResponse::getProductName, CartItem::setProduct))
 
                 .addMappings(mapper -> mapper.using(toppingNameToToppingConverter)
-                        .map(CartItemDTO::getToppingName, CartItem::setToppings))
+                        .map(CartItemResponse::getToppingName, CartItem::setToppings))
 
                 .addMappings(mapper -> mapper.using(sizeNameToSizeConverter)
-                        .map(CartItemDTO::getProductName, CartItem::setProduct));
+                        .map(CartItemResponse::getProductName, CartItem::setProduct));
     }
 
-    public CartItemDTO toDTO(CartItem cartItem) {
-        CartItemDTO cartItemDTO;
-        cartItemDTO = mapper.map(cartItem, CartItemDTO.class);
+    public CartItemResponse toDTO(CartItem cartItem) {
+        CartItemResponse cartItemResponse;
+        cartItemResponse = mapper.map(cartItem, CartItemResponse.class);
 
 //        productDTO.setUrlImgProduct(buildImgProductUrl(product.getId()));
-        return cartItemDTO;
+        return cartItemResponse;
     }
 
-    public CartItem toEntity(CartItemDTO dto) {
+    public CartItem toEntity(CartItemResponse dto) {
         return mapper.map(dto, CartItem.class);
     }
 }
