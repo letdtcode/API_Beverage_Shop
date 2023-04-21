@@ -5,6 +5,7 @@ import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.ICartRepository;
 import com.example.api_beverage_shop.repository.IUserRepository;
+import com.example.api_beverage_shop.repository.IWishListRepository;
 import com.example.api_beverage_shop.service.storage.ICloudinaryService;
 import com.example.api_beverage_shop.util.AppConstant;
 import org.modelmapper.ModelMapper;
@@ -29,6 +30,9 @@ public class UserServiceImpl implements IUserService {
     private ICartRepository cartRepository;
 
     @Autowired
+    private IWishListRepository wishListRepository;
+
+    @Autowired
     private ICloudinaryService cloudinaryService;
 
     @Override
@@ -40,14 +44,15 @@ public class UserServiceImpl implements IUserService {
     @Override
     public UserDTO createUser(UserDTO userDTO, String passwordEncode, Set role) {
         User user = mapper.map(userDTO, User.class);
-//        Cart cart = Cart.builder().user(user).build();
         Cart cart = Cart.builder().user(user).totalPrice(BigDecimal.valueOf(0)).build();
-//        cart.setUser(user);
+        WishList wishList = WishList.builder().user(user).build();
+
         Set<Role> roles = new HashSet<>();
         for (Object obj : role) {
             roles.add(mapper.map(obj, Role.class));
         }
         cartRepository.save(cart);
+        wishListRepository.save(wishList);
 
 //        Set user name
         Random random = new Random();

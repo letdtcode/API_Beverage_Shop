@@ -11,4 +11,5 @@ public class WishItemResponse {
     private Long Id;
     private String productName;
     private Long wishListId;
+    private int status;
 }

@@ -15,11 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
-//    @Autowired
-//    private final IProductService productService;
-//
-//    @Autowired
-//    private final IStorageService storageService;
     @Autowired
     private final IAuthenticationService authenticationService;
 
@@ -37,21 +32,4 @@ public class AuthController {
     public ResponseEntity<?> refresh(@Valid @RequestBody TokenRefreshRequest request) {
         return ResponseEntity.ok(authenticationService.refresh(request));
     }
-
-//    @GetMapping("/images/products/{Id}")
-//    @ResponseBody
-//    public ResponseEntity<Resource> getProductImage(@PathVariable Long Id, HttpServletRequest request) {
-//        String filename = productService.getPathImgProduct(Id);
-//        Resource file = storageService.loadAsResource(filename);
-//        String contentType = null;
-//        try {
-//            contentType = request.getServletContext().getMimeType(file.getFile().getAbsolutePath());
-//        } catch (IOException ex) {
-//            System.out.println("Could not determine fileType");
-//        }
-//        if (contentType == null) {
-//            contentType = "application/octet-stream";
-//        }
-//        return ResponseEntity.ok().contentType(MediaType.parseMediaType(contentType)).body(file);
-//    }
 }

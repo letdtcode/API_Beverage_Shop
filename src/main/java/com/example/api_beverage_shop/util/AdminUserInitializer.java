@@ -4,9 +4,11 @@ import com.example.api_beverage_shop.dto.UserDTO;
 import com.example.api_beverage_shop.model.Cart;
 import com.example.api_beverage_shop.model.Role;
 import com.example.api_beverage_shop.model.User;
+import com.example.api_beverage_shop.model.WishList;
 import com.example.api_beverage_shop.repository.ICartRepository;
 import com.example.api_beverage_shop.repository.IRoleRepository;
 import com.example.api_beverage_shop.repository.IUserRepository;
+import com.example.api_beverage_shop.repository.IWishListRepository;
 import com.example.api_beverage_shop.service.user.IUserService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +28,6 @@ import java.util.Set;
 @Component
 @AllArgsConstructor
 public class AdminUserInitializer implements CommandLineRunner {
-//    @Autowired
-//    @Qualifier("CustomUserDetailsService")
-//    private final UserDetailsService userDetailsService;
-
-//    @Autowired
-//    private final IUserService userService;
 
     @Autowired
     private final IRoleRepository roleRepository;
@@ -44,6 +40,9 @@ public class AdminUserInitializer implements CommandLineRunner {
 
     @Autowired
     private final ICartRepository cartRepository;
+
+    @Autowired
+    private final IWishListRepository wishListRepository;
 
     @Override
     public void run(String... args) {
@@ -83,8 +82,14 @@ public class AdminUserInitializer implements CommandLineRunner {
                     .phone("0342293128")
                     .roles(roles)
                     .build();
+
             Cart cart = Cart.builder().Id(1L).totalPrice(BigDecimal.valueOf(0)).user(admin).build();
+            WishList wishList = WishList.builder().Id(1L).user(admin).build();
+
+            admin.setWishList(wishList);
             admin.setCart(cart);
+
+            wishListRepository.save(wishList);
             cartRepository.save(cart);
             userRepository.save(admin);
         }
