@@ -12,9 +12,11 @@ import com.example.api_beverage_shop.repository.IWishItemRepository;
 import com.example.api_beverage_shop.repository.IWishListRepository;
 import com.example.api_beverage_shop.util.AppConstant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class WishServiceImpl implements IWishService {
 
     @Autowired
