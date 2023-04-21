@@ -84,7 +84,8 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public List<CartItemResponse> getAllCartItemInfo(Long userId) {
-        List<CartItem> cartItemList = cartItemRepository.findByCartId(userId);
+        Cart cart = cartRepository.findCartById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + userId));
+        List<CartItem> cartItemList = cartItemRepository.findCartItemByCart(cart);
         return cartItemList.stream().map(cartItem -> cartItemMapper.toDTO(cartItem)).collect(Collectors.toList());
     }
 }

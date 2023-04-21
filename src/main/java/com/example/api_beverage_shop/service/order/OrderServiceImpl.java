@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,11 +44,23 @@ public class OrderServiceImpl implements IOrderService {
         int payMent = request.getPayMent();
         String phoneNumber = request.getPhoneNumber();
         Integer shipping = request.getShipping();
-        BigDecimal totalItemPrice = request.getTotalItemPrice();
-        BigDecimal totalPrice = request.getTotalPrice();
+
+        BigDecimal totalItemPrice = BigDecimal.valueOf(0);
+        BigDecimal totalPrice = BigDecimal.valueOf(0);
+        List<Long> cardItemIdList = request.getCardItemId();
+
 
         User userOrder = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_NOT_FOUND + userId));
+
+
+        List<CartItem> cartItemList = new ArrayList<>();
+        for (Long idItem : cardItemIdList) {
+            CartItem item = cartItemRepository.findCartItemById(idItem).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_ITEM_NOT_FOUND + idItem));
+            totalItemPrice = totalItemPrice.add(item.getTotalPriceItem());
+            cartItemList.add(item);
+        }
+        totalPrice = totalItemPrice.add(BigDecimal.valueOf(shipping));
 
         Order orderBill = Order.builder()
                 .nameCustomer(nameCus)
@@ -59,8 +72,6 @@ public class OrderServiceImpl implements IOrderService {
                 .totalPrice(totalPrice)
                 .userOrder(userOrder).build();
         orderRepository.save(orderBill);
-
-        List<CartItem> cartItemList = cartItemRepository.findByCartId(userId);
 
         for (CartItem item : cartItemList) {
             Product productInCart = item.getProduct();
@@ -81,20 +92,21 @@ public class OrderServiceImpl implements IOrderService {
 
             orderItemRepository.save(orderItem);
         }
-        resetCartUser(userId);
+        resetCartUser(cartItemList, userId);
         return orderMapper.toDTO(orderBill);
     }
 
-    private void resetCartUser(Long cardId) {
-//        Delete All Cart Item
-        List<CartItem> cartItemList = cartItemRepository.findByCartId(cardId);
+    private void resetCartUser(List<CartItem> cartItemList, Long cardId) {
+//        Delete Cart Item
+        BigDecimal totalCart = BigDecimal.valueOf(0);
         for (CartItem item : cartItemList) {
+            totalCart = totalCart.add(item.getTotalPriceItem());
             cartItemRepository.delete(item);
         }
 
 //        Reset total price of cart user
         Cart cartUser = cartRepository.findCartById(cardId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + cardId));
-        cartUser.setTotalPrice(BigDecimal.valueOf(0));
+        cartUser.setTotalPrice(totalCart);
         cartRepository.save(cartUser);
     }
 }

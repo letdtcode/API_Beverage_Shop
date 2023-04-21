@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,8 +16,9 @@ public class CheckOutCartRequest {
     private int payMent;
     private String phoneNumber;
     private Integer shipping;
-    private BigDecimal totalItemPrice;
-    private BigDecimal totalPrice;
+    //    private BigDecimal totalItemPrice;
+//    private BigDecimal totalPrice;
+    private List<Long> cardItemId;
 //    private Long discountId;
 }
 
