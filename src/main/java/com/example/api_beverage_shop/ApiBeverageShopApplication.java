@@ -44,5 +44,4 @@ public class ApiBeverageShopApplication {
 
         return new Cloudinary(config);
     }
-
 }

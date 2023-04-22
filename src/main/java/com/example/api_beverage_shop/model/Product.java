@@ -40,4 +40,7 @@ public class Product {
 
     @Column(name = "pathImage")
     private String pathImage;
+
+    @Column(name = "rating")
+    private Float rating;
 }

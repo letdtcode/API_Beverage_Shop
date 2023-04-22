@@ -11,9 +11,14 @@ import com.example.api_beverage_shop.repository.IProductRepository;
 import com.example.api_beverage_shop.repository.IWishItemRepository;
 import com.example.api_beverage_shop.repository.IWishListRepository;
 import com.example.api_beverage_shop.util.AppConstant;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -38,6 +43,9 @@ public class WishServiceImpl implements IWishService {
         String productName = wishRequest.getProductName();
 
         Product product = productRepository.findByProductName(productName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND_WITH_NAME + productName));
+        String categoryName = product.getCategory().getCategoryName();
+        BigDecimal priceProduct = product.getPriceDefault();
+        Float ratingProduct = product.getRating();
         WishList wishListUser = wishListRepository.findWishListById(wishListId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + wishListId));
 
         WishItem wishItemSave;
@@ -48,7 +56,11 @@ public class WishServiceImpl implements IWishService {
             wishItemSave = WishItem.builder().product(product).status(1).wishList(wishListUser).build();
             wishItemSave = wishItemRepository.save(wishItemSave);
         }
-        return wishItemMapper.toDTO(wishItemSave);
+        WishItemResponse wishItemResponse = wishItemMapper.toDTO(wishItemSave);
+        wishItemResponse.setCategoryName(categoryName);
+        wishItemResponse.setPriceProduct(priceProduct);
+        wishItemResponse.setRating(ratingProduct);
+        return wishItemResponse;
     }
 
     public WishItem changeWishItem(WishItem wishItem, boolean change) {
@@ -59,5 +71,22 @@ public class WishServiceImpl implements IWishService {
         }
         wishItem = wishItemRepository.save(wishItem);
         return wishItem;
+    }
+
+    @Override
+    @Transactional
+    public List<WishItemResponse> getAllWishItemOfUser(Long userId) {
+        WishList wishList = wishListRepository.findWishListById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + userId));
+        Hibernate.initialize(wishList.getWishItems());
+        List<WishItem> wishItemList = wishList.getWishItems();
+        List<WishItemResponse> wishItemResponses = new ArrayList<>();
+        for (WishItem item : wishItemList) {
+            WishItemResponse itemResponse = wishItemMapper.toDTO(item);
+            itemResponse.setCategoryName(item.getProduct().getCategory().getCategoryName());
+            itemResponse.setPriceProduct(item.getProduct().getPriceDefault());
+            itemResponse.setRating(item.getProduct().getRating());
+            wishItemResponses.add(itemResponse);
+        }
+        return wishItemResponses;
     }
 }

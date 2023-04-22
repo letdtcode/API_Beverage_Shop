@@ -18,4 +18,6 @@ public interface IProductService {
     public ProductDTO updateInfoForProduct(ProductDTO productDTO, Long id);
 
     String getPathImgProduct(Long Id);
+
+    String getPathImgProductByName(String productName);
 }

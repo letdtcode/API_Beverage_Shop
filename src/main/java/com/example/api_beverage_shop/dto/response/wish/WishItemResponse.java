@@ -4,12 +4,17 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class WishItemResponse {
     private Long Id;
     private String productName;
+    private String categoryName;
+    private BigDecimal priceProduct;
+    private Float rating;
     private Long wishListId;
     private int status;
 }

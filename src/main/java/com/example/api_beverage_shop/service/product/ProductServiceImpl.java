@@ -110,4 +110,12 @@ public class ProductServiceImpl implements IProductService {
         String pathImg = product.getPathImage();
         return pathImg;
     }
+
+    @Override
+    public String getPathImgProductByName(String productName) {
+        Product product = productRepository.findByProductName(productName)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND_WITH_NAME + productName));
+        String pathImg = product.getPathImage();
+        return pathImg;
+    }
 }

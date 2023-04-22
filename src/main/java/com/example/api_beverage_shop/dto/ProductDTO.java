@@ -23,5 +23,6 @@ public class ProductDTO {
     private Long categoryId;
 //    private MultipartFile productImages;
     private String pathImage;
+    private Float rating;
     private Boolean isSaveCloud = true;
 }
