@@ -2,6 +2,7 @@ package com.example.api_beverage_shop.service.category;
 
 import com.example.api_beverage_shop.dto.CategoryDTO;
 import com.example.api_beverage_shop.dto.ProductDTO;
+import com.example.api_beverage_shop.exception.ResourceExistException;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.Category;
 import com.example.api_beverage_shop.model.Product;
@@ -66,6 +67,10 @@ public class CategoryServiceImpl implements ICategoryService {
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         Category category = Category.builder().build();
         BeanUtils.copyProperties(categoryDTO, category);
+        String categoryName =category.getCategoryName();
+        if (categoryRepository.existsByCategoryName(categoryName)) {
+            throw new ResourceExistException(AppConstant.CATEGORY_EXIST_WITH_NAME);
+        }
         category = categoryRepository.save(category);
         return mapper.map(category, CategoryDTO.class);
     }
