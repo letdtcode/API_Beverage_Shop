@@ -1,6 +1,7 @@
 package com.example.api_beverage_shop.service.product;
 
 import com.example.api_beverage_shop.dto.ProductDTO;
+import com.example.api_beverage_shop.exception.ResourceExistException;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.mapper.ProductMapper;
 import com.example.api_beverage_shop.model.Product;
@@ -68,6 +69,10 @@ public class ProductServiceImpl implements IProductService {
             String path = storageService.getStorageFilename(file, id);
             product.setPathImage(path);
             storageService.store(file, path);
+        }
+        String productName = product.getProductName();
+        if (productRepository.existsByProductName(productName)) {
+            throw new ResourceExistException(AppConstant.PRODUCT_EXIST_WITH_NAME);
         }
         product = productRepository.save(product);
         return productMapper.toDTO(product);

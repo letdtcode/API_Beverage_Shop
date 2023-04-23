@@ -46,6 +46,7 @@ public class WishServiceImpl implements IWishService {
         String categoryName = product.getCategory().getCategoryName();
         BigDecimal priceProduct = product.getPriceDefault();
         Float ratingProduct = product.getRating();
+        String pathImg = product.getPathImage();
         WishList wishListUser = wishListRepository.findWishListById(wishListId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + wishListId));
 
         WishItem wishItemSave;
@@ -59,6 +60,7 @@ public class WishServiceImpl implements IWishService {
         WishItemResponse wishItemResponse = wishItemMapper.toDTO(wishItemSave);
         wishItemResponse.setCategoryName(categoryName);
         wishItemResponse.setPriceProduct(priceProduct);
+        wishItemResponse.setPathImg(pathImg);
         wishItemResponse.setRating(ratingProduct);
         return wishItemResponse;
     }
@@ -84,9 +86,26 @@ public class WishServiceImpl implements IWishService {
             WishItemResponse itemResponse = wishItemMapper.toDTO(item);
             itemResponse.setCategoryName(item.getProduct().getCategory().getCategoryName());
             itemResponse.setPriceProduct(item.getProduct().getPriceDefault());
+            itemResponse.setPathImg(item.getProduct().getPathImage());
             itemResponse.setRating(item.getProduct().getRating());
             wishItemResponses.add(itemResponse);
         }
         return wishItemResponses;
+    }
+
+    @Override
+    @Transactional
+    public Boolean checkProductIsWishItem(String productName, Long userId) {
+        Boolean checkProductIsWish = false;
+        WishList wishList = wishListRepository.findWishListById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + userId));
+        Hibernate.initialize(wishList.getWishItems());
+        List<WishItem> wishItemList = wishList.getWishItems();
+        for (WishItem item : wishItemList) {
+            if (item.getProduct().getProductName().equals(productName) && item.getStatus() == 1) {
+                checkProductIsWish = true;
+                break;
+            }
+        }
+        return checkProductIsWish;
     }
 }

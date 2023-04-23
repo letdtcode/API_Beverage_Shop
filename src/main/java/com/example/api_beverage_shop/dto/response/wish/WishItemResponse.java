@@ -14,6 +14,7 @@ public class WishItemResponse {
     private String productName;
     private String categoryName;
     private BigDecimal priceProduct;
+    private String pathImg;
     private Float rating;
     private Long wishListId;
     private int status;

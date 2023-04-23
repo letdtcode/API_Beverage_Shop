@@ -19,5 +19,6 @@ public class AppConstant {
     public static final String DISCOUNT_NOT_FOUND_WITH_CODE = "Not found Discount with code:";
     public static final String WISH_LIST_NOT_FOUND = "Not found Wish List with id: ";
     public static final String CART_ITEM_NOT_FOUND = "Not found Cart Item with id: ";
+    public static final String PRODUCT_EXIST_WITH_NAME = "This product already exist in database";
     public static String Size_NOT_FOUND = "Not found Size with name: ";
 }
