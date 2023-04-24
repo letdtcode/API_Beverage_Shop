@@ -52,4 +52,7 @@ public class Order {
 //    Two way mapping
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems;
+
+    @Column(name = "status")
+    private Integer status;
 }

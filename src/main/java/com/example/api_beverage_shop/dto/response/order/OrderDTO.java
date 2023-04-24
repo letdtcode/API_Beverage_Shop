@@ -1,4 +1,4 @@
-package com.example.api_beverage_shop.dto;
+package com.example.api_beverage_shop.dto.response.order;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,5 +20,5 @@ public class OrderDTO {
     private BigDecimal totalPrice;
     private String discountCode;
     private Long userId;
-//    private List<OrderItemDTO> orderItems;
+    private Integer status;
 }

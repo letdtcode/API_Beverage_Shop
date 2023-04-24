@@ -26,6 +26,11 @@ public class WishClientController {
         return ResponseEntity.ok(wishService.getAllWishItemOfUser(userId));
     }
 
+    @GetMapping("/wishitems/current")
+    public ResponseEntity<?> getCurrentWishItemOfUser(@Param("userId") Long userId) {
+        return ResponseEntity.ok(wishService.getCurrentWishItemOfUser(userId));
+    }
+
     @GetMapping("/check/wishitem")
     public ResponseEntity<?> checkProductIsWishItem(@Param("productName") String productName, @Param("userId") Long userId) {
         return ResponseEntity.ok(wishService.checkProductIsWishItem(productName, userId));

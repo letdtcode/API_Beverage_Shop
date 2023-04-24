@@ -1,6 +1,6 @@
 package com.example.api_beverage_shop.service.order;
 
-import com.example.api_beverage_shop.dto.OrderDTO;
+import com.example.api_beverage_shop.dto.response.order.OrderDTO;
 import com.example.api_beverage_shop.dto.request.cart.CheckOutCartRequest;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.mapper.OrderMapper;
@@ -70,7 +70,8 @@ public class OrderServiceImpl implements IOrderService {
                 .payment(payMent)
                 .totalItemPrice(totalItemPrice)
                 .totalPrice(totalPrice)
-                .userOrder(userOrder).build();
+                .userOrder(userOrder)
+                .status(1).build();
         orderRepository.save(orderBill);
 
         for (CartItem item : cartItemList) {
@@ -94,6 +95,14 @@ public class OrderServiceImpl implements IOrderService {
         }
         resetCartUser(cartItemList, userId);
         return orderMapper.toDTO(orderBill);
+    }
+
+    @Override
+    public OrderDTO approveOrder(Long orderId, Integer status) {
+        Order orderCurrent = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.ORDER_NOT_FOUND + orderId));
+        orderCurrent.setStatus(status);
+        orderCurrent = orderRepository.save(orderCurrent);
+        return orderMapper.toDTO(orderCurrent);
     }
 
     private void resetCartUser(List<CartItem> cartItemList, Long cardId) {

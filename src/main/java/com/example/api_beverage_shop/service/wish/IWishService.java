@@ -11,6 +11,8 @@ public interface IWishService {
 
     List<WishItemResponse> getAllWishItemOfUser(Long userId);
 
+    List<WishItemResponse> getCurrentWishItemOfUser(Long userId);
+
     @Transactional
     Boolean checkProductIsWishItem(String productName, Long userId);
 }
