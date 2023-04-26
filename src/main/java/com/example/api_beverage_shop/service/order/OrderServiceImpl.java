@@ -4,6 +4,7 @@ import com.example.api_beverage_shop.dto.response.order.OrderItemResponse;
 import com.example.api_beverage_shop.dto.request.cart.CheckOutCartRequest;
 import com.example.api_beverage_shop.dto.response.order.OrderResponse;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
+import com.example.api_beverage_shop.mapper.OrderItemMapper;
 import com.example.api_beverage_shop.mapper.OrderMapper;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.*;
@@ -37,6 +38,9 @@ public class OrderServiceImpl implements IOrderService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private OrderItemMapper orderItemMapper;
 
     @Override
     public OrderResponse checkOut(CheckOutCartRequest request) {
@@ -123,7 +127,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     public List<OrderItemResponse> getAllListOrderItem(Long userId) {
-        List<Order> orderList = orderRepository.findByUserOrder_Id(userId);
-        return orderList.stream().map(orderItem -> orderMapper.toDTO(orderItem)).collect(Collectors.toList());
+        List<OrderItem> orderItems = orderItemRepository.findByOrder_UserOrder_Id(userId);
+        return orderItems.stream().map(orderItem -> orderItemMapper.toDTO(orderItem)).collect(Collectors.toList());
     }
 }

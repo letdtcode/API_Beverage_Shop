@@ -1,5 +1,6 @@
 package com.example.api_beverage_shop.controller.client;
 
+import com.example.api_beverage_shop.dto.response.order.OrderItemResponse;
 import com.example.api_beverage_shop.dto.response.order.OrderResponse;
 import com.example.api_beverage_shop.dto.request.cart.CheckOutCartRequest;
 import com.example.api_beverage_shop.service.order.IOrderService;
@@ -24,9 +25,9 @@ public class OrderClientController {
         return ResponseEntity.ok(orderResponse);
     }
 
-    @GetMapping("/orders")
-    public ResponseEntity<List<OrderResponse>> getAllListOrderOfUser(@Param("userId") Long userId) {
-        return ResponseEntity.ok(orderService.getAllListOrder(userId));
+    @GetMapping("/orderItems")
+    public ResponseEntity<List<OrderItemResponse>> getAllListOrderItems(@Param("userId") Long userId) {
+        return ResponseEntity.ok(orderService.getAllListOrderItem(userId));
     }
 
 }
