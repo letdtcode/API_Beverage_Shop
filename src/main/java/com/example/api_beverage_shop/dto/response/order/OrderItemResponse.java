@@ -18,4 +18,5 @@ public class OrderItemResponse {
     private Integer quantity;
     private BigDecimal totalPriceProduct;
     private BigDecimal totalPriceItem;
+    private Integer status;
 }

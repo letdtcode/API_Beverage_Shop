@@ -9,8 +9,10 @@ import com.example.api_beverage_shop.mapper.OrderMapper;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.*;
 import com.example.api_beverage_shop.util.AppConstant;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -126,8 +128,13 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
+    @Transactional
     public List<OrderItemResponse> getAllListOrderItem(Long userId) {
         List<OrderItem> orderItems = orderItemRepository.findByOrder_UserOrder_Id(userId);
+//        for (OrderItem item : orderItems) {
+//            Integer status = item.getOrder().getStatus();
+//        }
+        orderItems.forEach(orderItem -> Hibernate.initialize(orderItem.getToppings()));
         return orderItems.stream().map(orderItem -> orderItemMapper.toDTO(orderItem)).collect(Collectors.toList());
     }
 }

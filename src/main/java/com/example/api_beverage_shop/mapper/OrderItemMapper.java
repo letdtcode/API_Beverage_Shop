@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,7 @@ public class OrderItemMapper {
         List<Topping> toppingList = context.getSource();
         return toppingList != null ? toppingList.stream().map(Topping::getToppingName).collect(Collectors.toList()) : null;
     };
+
     private final Converter<List<String>, List<Topping>> toppingNameToToppingConverter = mappingContext -> {
         List<String> toppingName = mappingContext.getSource();
         List<Topping> toppingList = new ArrayList<>();
@@ -99,8 +101,9 @@ public class OrderItemMapper {
                         .map(OrderItem::getToppings, OrderItemResponse::setToppingsName))
 
                 .addMappings(mapper -> mapper.using(sizeToSizeNameConverter)
-                        .map(OrderItem::getSizeProduct, OrderItemResponse::setSizeName));
+                        .map(OrderItem::getSizeProduct, OrderItemResponse::setSizeName))
 
+                .addMappings(mapper -> mapper.map(src -> src.getOrder().getStatus(), OrderItemResponse::setStatus));
 
         mapper.createTypeMap(OrderItemResponse.class, OrderItem.class)
                 .setPropertyCondition(Conditions.isNotNull())
