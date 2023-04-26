@@ -1,6 +1,6 @@
 package com.example.api_beverage_shop.mapper;
 
-import com.example.api_beverage_shop.dto.response.order.OrderDTO;
+import com.example.api_beverage_shop.dto.response.order.OrderResponse;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.model.*;
 import com.example.api_beverage_shop.repository.IDiscountRepository;
@@ -51,30 +51,30 @@ public class OrderMapper {
     @PostConstruct
     public void init() {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        mapper.createTypeMap(Order.class, OrderDTO.class)
+        mapper.createTypeMap(Order.class, OrderResponse.class)
                 .addMappings(mapper -> mapper.using(discountToDiscountCodeConverter)
-                        .map(Order::getDiscount, OrderDTO::setDiscountCode))
+                        .map(Order::getDiscount, OrderResponse::setDiscountCode))
 
                 .addMappings(mapper -> mapper.using(userToUserIdConverter)
-                        .map(Order::getUserOrder, OrderDTO::setUserId));
+                        .map(Order::getUserOrder, OrderResponse::setUserId));
 
 
-        mapper.createTypeMap(OrderDTO.class, Order.class)
+        mapper.createTypeMap(OrderResponse.class, Order.class)
                 .setPropertyCondition(Conditions.isNotNull())
                 .addMappings(mapper -> mapper.using(discountCodeToDiscountConverter)
-                        .map(OrderDTO::getDiscountCode, Order::setDiscount))
+                        .map(OrderResponse::getDiscountCode, Order::setDiscount))
 
                 .addMappings(mapper -> mapper.using(userIdToUserConverter)
-                        .map(OrderDTO::getUserId, Order::setUserOrder));
+                        .map(OrderResponse::getUserId, Order::setUserOrder));
     }
 
-    public OrderDTO toDTO(Order order) {
-        OrderDTO orderDTO;
-        orderDTO = mapper.map(order, OrderDTO.class);
-        return orderDTO;
+    public OrderResponse toDTO(Order order) {
+        OrderResponse orderResponse;
+        orderResponse = mapper.map(order, OrderResponse.class);
+        return orderResponse;
     }
 
-    public Order toEntity(OrderDTO orderDTO) {
-        return mapper.map(orderDTO, Order.class);
+    public Order toEntity(OrderResponse orderResponse) {
+        return mapper.map(orderResponse, Order.class);
     }
 }

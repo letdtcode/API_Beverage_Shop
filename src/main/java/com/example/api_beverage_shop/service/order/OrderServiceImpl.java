@@ -1,7 +1,8 @@
 package com.example.api_beverage_shop.service.order;
 
-import com.example.api_beverage_shop.dto.response.order.OrderDTO;
+import com.example.api_beverage_shop.dto.response.order.OrderItemResponse;
 import com.example.api_beverage_shop.dto.request.cart.CheckOutCartRequest;
+import com.example.api_beverage_shop.dto.response.order.OrderResponse;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.mapper.OrderMapper;
 import com.example.api_beverage_shop.model.*;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderServiceImpl implements IOrderService {
@@ -37,7 +39,7 @@ public class OrderServiceImpl implements IOrderService {
     private OrderMapper orderMapper;
 
     @Override
-    public OrderDTO checkOut(CheckOutCartRequest request) {
+    public OrderResponse checkOut(CheckOutCartRequest request) {
         Long userId = request.getUserId();
         String address = request.getAddress();
         String nameCus = request.getNameCus();
@@ -98,7 +100,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public OrderDTO approveOrder(Long orderId, Integer status) {
+    public OrderResponse approveOrder(Long orderId, Integer status) {
         Order orderCurrent = orderRepository.findById(orderId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.ORDER_NOT_FOUND + orderId));
         orderCurrent.setStatus(status);
         orderCurrent = orderRepository.save(orderCurrent);
@@ -117,5 +119,11 @@ public class OrderServiceImpl implements IOrderService {
         Cart cartUser = cartRepository.findCartById(cardId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + cardId));
         cartUser.setTotalPrice(totalCart);
         cartRepository.save(cartUser);
+    }
+
+    @Override
+    public List<OrderItemResponse> getAllListOrderItem(Long userId) {
+        List<Order> orderList = orderRepository.findByUserOrder_Id(userId);
+        return orderList.stream().map(orderItem -> orderMapper.toDTO(orderItem)).collect(Collectors.toList());
     }
 }
