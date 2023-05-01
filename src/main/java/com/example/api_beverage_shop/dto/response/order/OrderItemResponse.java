@@ -19,4 +19,5 @@ public class OrderItemResponse {
     private BigDecimal totalPriceProduct;
     private BigDecimal totalPriceItem;
     private Integer status;
+    private String imgProduct;
 }

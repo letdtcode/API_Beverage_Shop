@@ -103,7 +103,8 @@ public class OrderItemMapper {
                 .addMappings(mapper -> mapper.using(sizeToSizeNameConverter)
                         .map(OrderItem::getSizeProduct, OrderItemResponse::setSizeName))
 
-                .addMappings(mapper -> mapper.map(src -> src.getOrder().getStatus(), OrderItemResponse::setStatus));
+                .addMappings(mapper -> mapper.map(src -> src.getOrder().getStatus(), OrderItemResponse::setStatus))
+                .addMappings(mapper -> mapper.map(src -> src.getProduct().getPathImage(), OrderItemResponse::setImgProduct));
 
         mapper.createTypeMap(OrderItemResponse.class, OrderItem.class)
                 .setPropertyCondition(Conditions.isNotNull())

@@ -1,7 +1,7 @@
 package com.example.api_beverage_shop.service.order;
 
-import com.example.api_beverage_shop.dto.response.order.OrderItemResponse;
 import com.example.api_beverage_shop.dto.request.cart.CheckOutCartRequest;
+import com.example.api_beverage_shop.dto.response.order.OrderItemResponse;
 import com.example.api_beverage_shop.dto.response.order.OrderResponse;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.mapper.OrderItemMapper;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,12 +130,75 @@ public class OrderServiceImpl implements IOrderService {
 
     @Override
     @Transactional
-    public List<OrderItemResponse> getAllListOrderItem(Long userId) {
-        List<OrderItem> orderItems = orderItemRepository.findByOrder_UserOrder_Id(userId);
-//        for (OrderItem item : orderItems) {
-//            Integer status = item.getOrder().getStatus();
-//        }
+    public List<OrderItemResponse> getAllListOrderItems(Long orderId) {
+        List<OrderItem> orderItems = orderItemRepository.findByOrder_Id(orderId);
         orderItems.forEach(orderItem -> Hibernate.initialize(orderItem.getToppings()));
         return orderItems.stream().map(orderItem -> orderItemMapper.toDTO(orderItem)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResponse> getAllListOrderOfUser(Long userId) {
+        List<Order> orders = orderRepository.findByUserOrder_Id(userId);
+        return orders.stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResponse> getListOrderWaitingConfirmOfUser(Long userId) {
+        List<Order> orders = orderRepository.findByUserOrder_Id(userId);
+        if (orders != null) {
+            Iterator<Order> iterator = orders.iterator();
+            while (iterator.hasNext()) {
+                Order item = iterator.next();
+                if (item.getStatus() != 1) {
+                    iterator.remove();
+                }
+            }
+        }
+        return orders.stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResponse> getListOrderWaitingDeliveryOfUser(Long userId) {
+        List<Order> orders = orderRepository.findByUserOrder_Id(userId);
+        if (orders != null) {
+            Iterator<Order> iterator = orders.iterator();
+            while (iterator.hasNext()) {
+                Order item = iterator.next();
+                if (item.getStatus() != 2) {
+                    iterator.remove();
+                }
+            }
+        }
+        return orders.stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResponse> getListOrderSuccessOfUser(Long userId) {
+        List<Order> orders = orderRepository.findByUserOrder_Id(userId);
+        if (orders != null) {
+            Iterator<Order> iterator = orders.iterator();
+            while (iterator.hasNext()) {
+                Order item = iterator.next();
+                if (item.getStatus() != 3) {
+                    iterator.remove();
+                }
+            }
+        }
+        return orders.stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<OrderResponse> getListOrderCancelOfUser(Long userId) {
+        List<Order> orders = orderRepository.findByUserOrder_Id(userId);
+        if (orders != null) {
+            Iterator<Order> iterator = orders.iterator();
+            while (iterator.hasNext()) {
+                Order item = iterator.next();
+                if (item.getStatus() != 0) {
+                    iterator.remove();
+                }
+            }
+        }
+        return orders.stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
 }

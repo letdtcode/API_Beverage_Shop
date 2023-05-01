@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,7 +18,7 @@ public class OrderStaffController {
     @Autowired
     private final IOrderService orderService;
 
-    @PostMapping("/order/approve")
+    @PutMapping("/order/approve")
     public ResponseEntity<OrderResponse> approveOrder(@Param("orderId") Long orderId, @Param("status") Integer status) {
         OrderResponse orderResponse = orderService.approveOrder(orderId, status);
         return ResponseEntity.ok(orderResponse);
