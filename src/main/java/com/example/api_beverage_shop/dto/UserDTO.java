@@ -30,6 +30,7 @@ public class UserDTO {
     private String address;
     private String phone;
     private String avatar;
+    private List<String> roleName;
 //    private MultipartFile imgAvatar;
     //lưu hình
 }

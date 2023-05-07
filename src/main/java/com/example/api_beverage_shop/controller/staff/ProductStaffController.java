@@ -28,7 +28,7 @@ public class ProductStaffController {
     }
 
     @PutMapping("/product/changestatus")
-    public ResponseEntity<ProductDTO> getInfoAllProduct(@Param("productName") String productName,
+    public ResponseEntity<ProductDTO> changeStatusOfProduct(@Param("productName") String productName,
                                                         @Param("status") Integer status) {
         ProductDTO productDTO = productService.changeStatusProduct(productName, status);
         return ResponseEntity.ok(productDTO);

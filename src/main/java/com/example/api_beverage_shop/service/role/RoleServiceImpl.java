@@ -25,7 +25,7 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public RoleDTO findByRoleName(String roleName) {
-        Role role = roleRepository.findByRoleName(roleName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.ROLE_NOT_FOUND + roleName));
+        Role role = roleRepository.findByRoleName(roleName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.ROLE_NOT_FOUND_WITH_NAME + roleName));
         return mapper.map(role, RoleDTO.class);
     }
 }
