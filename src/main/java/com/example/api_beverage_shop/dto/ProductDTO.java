@@ -4,10 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,8 +19,9 @@ public class ProductDTO {
     private String description;
     private Integer quantity;
     private Long categoryId;
-//    private MultipartFile productImages;
+    //    private MultipartFile productImages;
     private String pathImage;
     private Float rating;
     private Boolean isSaveCloud = true;
+    private Integer status;
 }

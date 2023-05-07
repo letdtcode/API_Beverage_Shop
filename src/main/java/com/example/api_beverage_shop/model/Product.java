@@ -43,4 +43,7 @@ public class Product {
 
     @Column(name = "rating")
     private Float rating;
+
+    @Column(name = "status")
+    private Integer status;
 }

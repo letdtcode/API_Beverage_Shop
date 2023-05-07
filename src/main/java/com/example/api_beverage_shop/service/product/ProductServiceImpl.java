@@ -42,6 +42,18 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public List<ProductDTO> getAllProductsCurrentUse() {
+        List<Product> products = productRepository.findAll();
+        for (Product product : products) {
+            if (product.getStatus() == 0) {
+                products.remove(product);
+            }
+        }
+        List<ProductDTO> productDTOList = products.stream().map(product -> productMapper.toDTO(product)).collect(Collectors.toList());
+        return productDTOList;
+    }
+
+    @Override
     public ProductDTO getProductById(Long Id) {
         Product product = productRepository.findById(Id)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND + Id));

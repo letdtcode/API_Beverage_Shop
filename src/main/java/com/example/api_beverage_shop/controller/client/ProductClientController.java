@@ -26,8 +26,8 @@ public class ProductClientController {
     private final IStorageService storageService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<ProductDTO>> getInfoAllProduct() {
-        List<ProductDTO> products = productService.getAllProducts();
+    public ResponseEntity<List<ProductDTO>> getAllProductsCurrentUse() {
+        List<ProductDTO> products = productService.getAllProductsCurrentUse();
         return ResponseEntity.ok(products);
     }
 
@@ -36,6 +36,7 @@ public class ProductClientController {
         return ResponseEntity.ok(productService.getPathImgProductByName(productName));
     }
 
+    //    Not use in client
     @GetMapping("/images/products/{Id}")
     @ResponseBody
     public ResponseEntity<Resource> getProductImage(@PathVariable Long Id, HttpServletRequest request) {
