@@ -4,8 +4,10 @@ import com.example.api_beverage_shop.dto.ProductDTO;
 import com.example.api_beverage_shop.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,5 +25,12 @@ public class ProductStaffController {
     public ResponseEntity<List<ProductDTO>> getInfoAllProduct() {
         List<ProductDTO> products = productService.getAllProducts();
         return ResponseEntity.ok(products);
+    }
+
+    @PutMapping("/product/changestatus")
+    public ResponseEntity<ProductDTO> getInfoAllProduct(@Param("productName") String productName,
+                                                        @Param("status") Integer status) {
+        ProductDTO productDTO = productService.changeStatusProduct(productName, status);
+        return ResponseEntity.ok(productDTO);
     }
 }

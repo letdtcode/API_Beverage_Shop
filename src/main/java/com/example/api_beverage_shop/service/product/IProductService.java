@@ -23,4 +23,6 @@ public interface IProductService {
     String getPathImgProduct(Long Id);
 
     String getPathImgProductByName(String productName);
+
+    ProductDTO changeStatusProduct(String productName, Integer status);
 }

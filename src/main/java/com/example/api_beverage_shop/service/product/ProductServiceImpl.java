@@ -135,4 +135,13 @@ public class ProductServiceImpl implements IProductService {
         String pathImg = product.getPathImage();
         return pathImg;
     }
+
+    @Override
+    public ProductDTO changeStatusProduct(String productName, Integer status) {
+        Product product = productRepository.findByProductName(productName)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND_WITH_NAME + productName));
+        product.setStatus(status);
+        productRepository.save(product);
+        return productMapper.toDTO(product);
+    }
 }
