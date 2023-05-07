@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -44,9 +45,11 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<ProductDTO> getAllProductsCurrentUse() {
         List<Product> products = productRepository.findAll();
-        for (Product product : products) {
-            if (product.getStatus() == 0) {
-                products.remove(product);
+        Iterator<Product> productList = products.iterator();
+        while (productList.hasNext()) {
+            Product item = productList.next();
+            if (item.getStatus() == 0) {
+                productList.remove();
             }
         }
         List<ProductDTO> productDTOList = products.stream().map(product -> productMapper.toDTO(product)).collect(Collectors.toList());
