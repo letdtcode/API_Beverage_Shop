@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
 
         for (Role role : user.getRoles()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));
         }
 
         return new CustomUserDetail(user, grantedAuthorities);

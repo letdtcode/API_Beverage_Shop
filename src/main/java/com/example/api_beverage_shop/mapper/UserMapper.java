@@ -7,6 +7,7 @@ import com.example.api_beverage_shop.model.User;
 import com.example.api_beverage_shop.repository.IRoleRepository;
 import com.example.api_beverage_shop.util.AppConstant;
 import jakarta.annotation.PostConstruct;
+import org.modelmapper.Conditions;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -54,7 +55,7 @@ public class UserMapper {
     public void init() {
         mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         mapper.createTypeMap(User.class, UserDTO.class).addMappings(mapper -> mapper.using(roleToRoleNameConverter).map(User::getRoles, UserDTO::setRoleName));
-        mapper.createTypeMap(UserDTO.class, User.class).addMappings(mapper -> mapper.using(roleNameToRoleConverter).map(UserDTO::getRoleName, User::setRoles));
+        mapper.createTypeMap(UserDTO.class, User.class).setPropertyCondition(Conditions.isNotNull()).addMappings(mapper -> mapper.using(roleNameToRoleConverter).map(UserDTO::getRoleName, User::setRoles));
     }
 
     public UserDTO toDTO(User user) {

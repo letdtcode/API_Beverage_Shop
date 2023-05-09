@@ -23,5 +23,6 @@ public class ProductDTO {
     private String pathImage;
     private Float rating;
     private Boolean isSaveCloud = true;
+    private Integer soldCount;
     private Integer status;
 }

@@ -201,4 +201,10 @@ public class OrderServiceImpl implements IOrderService {
         }
         return orders.stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
     }
+
+    @Override
+    public List<OrderResponse> getListOrderByStatus(Integer statusOrder) {
+        List<Order> orders = orderRepository.findByStatus(statusOrder);
+        return orders.stream().map(order -> orderMapper.toDTO(order)).collect(Collectors.toList());
+    }
 }

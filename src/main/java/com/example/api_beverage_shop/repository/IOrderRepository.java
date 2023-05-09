@@ -12,4 +12,6 @@ public interface IOrderRepository extends JpaRepository<Order, Long> {
     public Optional<Order> findById(Long Id);
 
     public List<Order> findByUserOrder_Id(Long userId);
+
+    public List<Order> findByStatus(Integer status);
 }

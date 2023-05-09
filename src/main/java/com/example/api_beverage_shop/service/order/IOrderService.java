@@ -22,4 +22,6 @@ public interface IOrderService {
     List<OrderResponse> getListOrderWaitingConfirmOfUser(Long userId);
 
     List<OrderResponse> getListOrderCancelOfUser(Long userId);
+
+    List<OrderResponse> getListOrderByStatus(Integer statusOrder);
 }
