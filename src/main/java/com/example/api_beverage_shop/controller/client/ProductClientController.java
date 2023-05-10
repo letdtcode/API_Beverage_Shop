@@ -31,6 +31,12 @@ public class ProductClientController {
         return ResponseEntity.ok(products);
     }
 
+    @GetMapping("/products-cate")
+    public ResponseEntity<List<ProductDTO>> getProductsByCategoryName(@Param("categoryName") String categoryName) {
+        List<ProductDTO> products = productService.getProductsByCategoryName(categoryName);
+        return ResponseEntity.ok(products);
+    }
+
     @GetMapping("/image/product")
     public ResponseEntity<String> getImgPathProductByProductName(@Param("productName") String productName) {
         return ResponseEntity.ok(productService.getPathImgProductByName(productName));

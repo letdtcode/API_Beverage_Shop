@@ -23,6 +23,9 @@ public class Category {
     @Column(name = "description", columnDefinition = "nvarchar(255)")
     private String description;
 
+    @Column(name = "pathImage")
+    private String pathImage;
+
     @OneToMany(mappedBy = "category")
     private List<Product> products;
 }

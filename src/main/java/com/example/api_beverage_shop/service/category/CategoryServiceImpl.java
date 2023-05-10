@@ -8,11 +8,13 @@ import com.example.api_beverage_shop.model.Category;
 import com.example.api_beverage_shop.model.Product;
 import com.example.api_beverage_shop.repository.ICategoryRepository;
 import com.example.api_beverage_shop.repository.IProductRepository;
+import com.example.api_beverage_shop.service.storage.ICloudinaryService;
 import com.example.api_beverage_shop.util.AppConstant;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,9 @@ public class CategoryServiceImpl implements ICategoryService {
     private IProductRepository productRepository;
     @Autowired
     private ModelMapper mapper;
+
+    @Autowired
+    private ICloudinaryService cloudinaryService;
 
     @Override
     public CategoryDTO getCategoryByName(String name) {
@@ -67,7 +72,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         Category category = Category.builder().build();
         BeanUtils.copyProperties(categoryDTO, category);
-        String categoryName =category.getCategoryName();
+        String categoryName = category.getCategoryName();
         if (categoryRepository.existsByCategoryName(categoryName)) {
             throw new ResourceExistException(AppConstant.CATEGORY_EXIST_WITH_NAME);
         }
@@ -88,5 +93,17 @@ public class CategoryServiceImpl implements ICategoryService {
         } else throw new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + id);
     }
 
-
+    @Override
+    public CategoryDTO updateImageForCategory(Long Id, MultipartFile file) {
+        Category category = categoryRepository.findById(Id)
+                .orElseThrow(() -> new ResourceNotFoundException(AppConstant.CATEGORY_NOT_FOUND + Id));
+        if (!file.isEmpty()) {
+            //Luu anh san pham
+            String pathImage = cloudinaryService.store(file);
+            category.setPathImage(pathImage);
+            categoryRepository.save(category);
+            return mapper.map(category, CategoryDTO.class);
+        }
+        throw new ResourceNotFoundException(AppConstant.FILE_IS_NULL);
+    }
 }

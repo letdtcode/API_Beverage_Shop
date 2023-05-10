@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -42,6 +43,13 @@ public class CategoryController {
     @PutMapping("/categories/{id}")
     public ResponseEntity<CategoryDTO> updateCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO) throws Exception {
         return ResponseEntity.ok(categoryService.updateCategory(categoryDTO, id));
+    }
+
+    @PutMapping("/categories")
+    public ResponseEntity<CategoryDTO> updateCategory(
+            @RequestParam("id") Long id,
+            @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.ok(categoryService.updateImageForCategory(id, file));
     }
 
     @GetMapping("/{category_id}/products")

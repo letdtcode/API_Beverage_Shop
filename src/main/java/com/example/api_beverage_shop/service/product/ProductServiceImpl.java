@@ -43,6 +43,13 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
+    public List<ProductDTO> getProductsByCategoryName(String categoryName) {
+        List<Product> products = productRepository.findByCategory_CategoryName(categoryName);
+        List<ProductDTO> productDTOList = products.stream().map(product -> productMapper.toDTO(product)).collect(Collectors.toList());
+        return productDTOList;
+    }
+
+    @Override
     public List<ProductDTO> getAllProductsCurrentUse() {
         List<Product> products = productRepository.findAll();
         Iterator<Product> productList = products.iterator();
