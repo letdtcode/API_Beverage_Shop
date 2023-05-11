@@ -51,8 +51,8 @@ public class UserServiceImpl implements IUserService {
         for (Object obj : role) {
             roles.add(mapper.map(obj, Role.class));
         }
-        cartRepository.save(cart);
-        wishListRepository.save(wishList);
+//        cartRepository.save(cart);
+//        wishListRepository.save(wishList);
 
 //        Set user name
         Random random = new Random();
@@ -69,6 +69,7 @@ public class UserServiceImpl implements IUserService {
         user.setGender(1);
         user.setRoles(roles);
         user.setCart(cart);
+        user.setWishList(wishList);
         user = userRepository.save(user);
         return mapper.map(user, UserDTO.class);
     }

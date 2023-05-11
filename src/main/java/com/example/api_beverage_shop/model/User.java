@@ -58,11 +58,11 @@ public class User {
     private Set<Role> roles;
 
     //Two way mapping
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Cart cart;
 
     //Two way mapping
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private WishList wishList;
 
     @OneToMany(mappedBy = "userOrder")

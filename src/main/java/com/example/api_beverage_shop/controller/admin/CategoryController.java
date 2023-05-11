@@ -46,7 +46,7 @@ public class CategoryController {
     }
 
     @PutMapping("/categories")
-    public ResponseEntity<CategoryDTO> updateCategory(
+    public ResponseEntity<CategoryDTO> updateImageForCategory(
             @RequestParam("id") Long id,
             @RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok(categoryService.updateImageForCategory(id, file));

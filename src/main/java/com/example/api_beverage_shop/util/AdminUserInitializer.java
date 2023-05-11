@@ -89,8 +89,8 @@ public class AdminUserInitializer implements CommandLineRunner {
             admin.setWishList(wishList);
             admin.setCart(cart);
 
-            wishListRepository.save(wishList);
-            cartRepository.save(cart);
+//            wishListRepository.save(wishList);
+//            cartRepository.save(cart);
             userRepository.save(admin);
         }
     }
