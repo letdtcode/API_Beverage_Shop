@@ -23,11 +23,21 @@ public class NotificationStaffController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @GetMapping("/notifications")
+    public ResponseEntity<List<NotificationDTO>> getAllNotifications() {
+        return ResponseEntity.ok(notificationService.getAllNotification());
+    }
+
     @PostMapping("/notifications")
     public ResponseEntity<NotificationDTO> createNotification(
             @RequestParam("file") MultipartFile file,
             @RequestParam("model") String JsonObject) throws JsonProcessingException {
         NotificationDTO notification = objectMapper.readValue(JsonObject, NotificationDTO.class);
         return ResponseEntity.ok(notificationService.createNotification(notification, file));
+    }
+
+    @PutMapping("/notifications/changestatus")
+    public ResponseEntity<List<NotificationDTO>> updateStatus(@RequestBody List<NotificationDTO> notificationList) {
+        return ResponseEntity.ok(notificationService.updateStatus(notificationList));
     }
 }

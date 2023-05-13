@@ -18,4 +18,6 @@ public interface IUserService {
     UserDTO updateUser(UserDTO userDTO, Long id);
 
     UserDTO updateImageProfile(MultipartFile file, Long id);
+
+    UserDTO changePassword(String mail, String passwordNew);
 }

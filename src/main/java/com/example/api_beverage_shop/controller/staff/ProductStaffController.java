@@ -29,7 +29,7 @@ public class ProductStaffController {
 
     @PutMapping("/product/changestatus")
     public ResponseEntity<ProductDTO> changeStatusOfProduct(@Param("productName") String productName,
-                                                        @Param("status") Integer status) {
+                                                            @Param("status") Integer status) {
         ProductDTO productDTO = productService.changeStatusProduct(productName, status);
         return ResponseEntity.ok(productDTO);
     }

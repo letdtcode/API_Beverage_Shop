@@ -15,4 +15,6 @@ public class NotificationDTO {
     private String content;
 
     private String pathImgDescription;
+
+    private Integer status;
 }

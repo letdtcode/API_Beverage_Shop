@@ -20,7 +20,7 @@ public class UserDTO {
     private Long Id;
     @Length(min = 5)
     private String userName;
-
+    private String password;
     @NotEmpty
     private String firstName;
     private String lastName;

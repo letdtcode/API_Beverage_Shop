@@ -2,7 +2,10 @@ package com.example.api_beverage_shop.service.user;
 
 import com.example.api_beverage_shop.dto.UserDTO;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
-import com.example.api_beverage_shop.model.*;
+import com.example.api_beverage_shop.model.Cart;
+import com.example.api_beverage_shop.model.Role;
+import com.example.api_beverage_shop.model.User;
+import com.example.api_beverage_shop.model.WishList;
 import com.example.api_beverage_shop.repository.ICartRepository;
 import com.example.api_beverage_shop.repository.IUserRepository;
 import com.example.api_beverage_shop.repository.IWishListRepository;
@@ -10,13 +13,17 @@ import com.example.api_beverage_shop.service.storage.ICloudinaryService;
 import com.example.api_beverage_shop.util.AppConstant;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,6 +41,9 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private ICloudinaryService cloudinaryService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDTO findByMail(String email) {
@@ -107,6 +117,15 @@ public class UserServiceImpl implements IUserService {
         String pathImage = cloudinaryService.store(file);
         user.setAvatar(pathImage);
         user = userRepository.save(user);
+        return mapper.map(user, UserDTO.class);
+    }
+
+    @Override
+    public UserDTO changePassword(String mail, String passwordNew) {
+        User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppConstant.MAIL_NOT_FOUND));
+        String passwordEncode = passwordEncoder.encode(passwordNew);
+        user.setPassword(passwordEncode);
+        userRepository.save(user);
         return mapper.map(user, UserDTO.class);
     }
 }

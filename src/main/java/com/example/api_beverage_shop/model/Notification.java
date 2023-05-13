@@ -23,4 +23,7 @@ public class Notification {
 
     @Column(name = "pathImage")
     private String pathImgDescription;
+
+    @Column(name = "status")
+    private Integer status;
 }

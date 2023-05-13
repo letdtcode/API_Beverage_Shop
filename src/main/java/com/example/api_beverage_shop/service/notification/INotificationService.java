@@ -9,4 +9,8 @@ public interface INotificationService {
     NotificationDTO createNotification(NotificationDTO notificationDTO, MultipartFile file);
 
     List<NotificationDTO> getAllNotification();
+
+    List<NotificationDTO> getNotificationByStatus(Integer status);
+
+    List<NotificationDTO> updateStatus(List<NotificationDTO> notificationList);
 }

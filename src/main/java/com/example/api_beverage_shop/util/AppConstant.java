@@ -22,5 +22,6 @@ public class AppConstant {
     public static final String PRODUCT_EXIST_WITH_NAME = "This product already exist in database";
     public static final String CATEGORY_EXIST_WITH_NAME = "This category already exist in database";
     public static final String ORDER_NOT_FOUND = "Not found Order with id: ";
+    public static final String NOTIFICATION_NOT_FOUND = "Not found Notification with id: ";
     public static String Size_NOT_FOUND = "Not found Size with name: ";
 }
