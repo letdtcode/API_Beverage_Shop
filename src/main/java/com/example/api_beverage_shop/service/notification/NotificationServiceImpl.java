@@ -42,18 +42,21 @@ public class NotificationServiceImpl implements INotificationService {
     @Override
     public List<NotificationDTO> getNotificationByStatus(Integer status) {
         List<Notification> notificationList = notificationRepository.findByStatus(status);
-        return notificationList.stream().map(noti -> mapper.map(noti, NotificationDTO.class)).collect(Collectors.toList());
+        return notificationList.stream().map(noti ->
+                mapper.map(noti, NotificationDTO.class)).collect(Collectors.toList());
     }
-
     @Override
     public List<NotificationDTO> updateStatus(List<NotificationDTO> notificationList) {
         List<Notification> updatedNotification = new ArrayList<>();
         for (NotificationDTO notificationDTO : notificationList) {
             Long idNotification = notificationDTO.getId();
-            Notification itemNotification = notificationRepository.findById(notificationDTO.getId()).orElseThrow(() -> new ResourceNotFoundException(AppConstant.NOTIFICATION_NOT_FOUND + idNotification));
+            Notification itemNotification = notificationRepository.findById(notificationDTO.getId()).orElseThrow(()
+                    -> new ResourceNotFoundException(AppConstant.NOTIFICATION_NOT_FOUND + idNotification));
             itemNotification.setStatus(notificationDTO.getStatus());
             updatedNotification.add(notificationRepository.save(itemNotification));
         }
         return updatedNotification.stream().map(noti -> mapper.map(noti, NotificationDTO.class)).collect(Collectors.toList());
     }
+
+
 }

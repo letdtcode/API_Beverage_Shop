@@ -38,7 +38,8 @@ public class SizeServiceImpl implements ISizeService {
     @Override
     public List<SizeDTO> getAllSizeInfo() {
         List<Size> sizeList = sizeRepository.findAll();
-        List<SizeDTO> sizeDTOList = sizeList.stream().map(size -> mapper.map(size, SizeDTO.class)).collect(Collectors.toList());
+        List<SizeDTO> sizeDTOList = sizeList.stream().map(
+                size -> mapper.map(size, SizeDTO.class)).collect(Collectors.toList());
         return sizeDTOList;
     }
 }

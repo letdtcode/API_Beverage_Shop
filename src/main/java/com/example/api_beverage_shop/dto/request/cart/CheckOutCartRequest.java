@@ -16,9 +16,6 @@ public class CheckOutCartRequest {
     private int payMent;
     private String phoneNumber;
     private Integer shipping;
-    //    private BigDecimal totalItemPrice;
-//    private BigDecimal totalPrice;
     private List<Long> cardItemId;
-//    private Long discountId;
 }
 

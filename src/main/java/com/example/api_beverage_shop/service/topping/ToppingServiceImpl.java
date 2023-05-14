@@ -39,7 +39,10 @@ public class ToppingServiceImpl implements IToppingService {
     @Override
     public List<ToppingDTO> getAllToppingInfo() {
         List<Topping> toppingList = toppingRepository.findAll();
-        List<ToppingDTO> toppingDTOList = toppingList.stream().map(size -> mapper.map(size, ToppingDTO.class)).collect(Collectors.toList());
+        List<ToppingDTO> toppingDTOList = toppingList.stream().map(size
+                -> mapper.map(size, ToppingDTO.class)).collect(Collectors.toList());
         return toppingDTOList;
     }
+
+
 }

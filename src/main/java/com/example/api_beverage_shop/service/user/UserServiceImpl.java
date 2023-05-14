@@ -61,20 +61,15 @@ public class UserServiceImpl implements IUserService {
         for (Object obj : role) {
             roles.add(mapper.map(obj, Role.class));
         }
-//        cartRepository.save(cart);
-//        wishListRepository.save(wishList);
-
 //        Set user name
         Random random = new Random();
         int userId = random.nextInt(2000); // tạo ra số nguyên ngẫu nhiên từ 0 đến 999,999,999
         String userIdString = String.valueOf(userId);
         user.setUserName("user" + userIdString);
-
 //        Set date birth
         DateTimeFormatter dateBirth = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         LocalDate birth = LocalDate.parse(LocalDate.now().format(dateBirth), dateBirth);
         user.setDateOfBirth(birth);
-
         user.setPassword(passwordEncode);
         user.setGender(1);
         user.setRoles(roles);
@@ -122,7 +117,8 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserDTO changePassword(String mail, String passwordNew) {
-        User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppConstant.MAIL_NOT_FOUND));
+        User user = userRepository.findByMail(mail).orElseThrow(() ->
+                new ResourceNotFoundException(AppConstant.MAIL_NOT_FOUND));
         String passwordEncode = passwordEncoder.encode(passwordNew);
         user.setPassword(passwordEncode);
         userRepository.save(user);

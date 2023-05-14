@@ -38,14 +38,24 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<ProductDTO> getAllProducts() {
         List<Product> products = productRepository.findAll();
-        List<ProductDTO> productDTOList = products.stream().map(product -> productMapper.toDTO(product)).collect(Collectors.toList());
+        List<ProductDTO> productDTOList = products.stream().map(
+                product -> productMapper.toDTO(product)).collect(Collectors.toList());
         return productDTOList;
     }
+
 
     @Override
     public List<ProductDTO> getProductsByCategoryName(String categoryName) {
         List<Product> products = productRepository.findByCategory_CategoryName(categoryName);
-        List<ProductDTO> productDTOList = products.stream().map(product -> productMapper.toDTO(product)).collect(Collectors.toList());
+        Iterator<Product> productList = products.iterator();
+        while (productList.hasNext()) {
+            Product item = productList.next();
+            if (item.getStatus() == 0) {
+                productList.remove();
+            }
+        }
+        List<ProductDTO> productDTOList = products.stream().map(product
+                -> productMapper.toDTO(product)).collect(Collectors.toList());
         return productDTOList;
     }
 
@@ -59,9 +69,11 @@ public class ProductServiceImpl implements IProductService {
                 productList.remove();
             }
         }
-        List<ProductDTO> productDTOList = products.stream().map(product -> productMapper.toDTO(product)).collect(Collectors.toList());
+        List<ProductDTO> productDTOList = products.stream().map(product ->
+                productMapper.toDTO(product)).collect(Collectors.toList());
         return productDTOList;
     }
+
 
     @Override
     public ProductDTO getProductById(Long Id) {
@@ -72,7 +84,8 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public ProductDTO getProductByName(String name) {
-        Product product = productRepository.findByProductName(name).orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND_WITH_NAME + name));
+        Product product = productRepository.findByProductName(name).orElseThrow(()
+                -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND_WITH_NAME + name));
         return productMapper.toDTO(product);
     }
 
@@ -96,6 +109,7 @@ public class ProductServiceImpl implements IProductService {
         if (productRepository.existsByProductName(productName)) {
             throw new ResourceExistException(AppConstant.PRODUCT_EXIST_WITH_NAME);
         }
+        product.setSoldCount(0);
         product = productRepository.save(product);
         return productMapper.toDTO(product);
     }

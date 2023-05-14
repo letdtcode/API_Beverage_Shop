@@ -42,12 +42,14 @@ public class WishServiceImpl implements IWishService {
         Long wishListId = userId;
         String productName = wishRequest.getProductName();
 
-        Product product = productRepository.findByProductName(productName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND_WITH_NAME + productName));
+        Product product = productRepository.findByProductName(productName).orElseThrow(()
+                -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND_WITH_NAME + productName));
         String categoryName = product.getCategory().getCategoryName();
         BigDecimal priceProduct = product.getPriceDefault();
         Float ratingProduct = product.getRating();
         String pathImg = product.getPathImage();
-        WishList wishListUser = wishListRepository.findWishListById(wishListId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + wishListId));
+        WishList wishListUser = wishListRepository.findWishListById(wishListId).orElseThrow(()
+                -> new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + wishListId));
 
         WishItem wishItemSave;
         Optional<WishItem> wishItem = wishItemRepository.findByProductAndWishList(product, wishListUser);
@@ -78,7 +80,8 @@ public class WishServiceImpl implements IWishService {
     @Override
     @Transactional
     public List<WishItemResponse> getAllWishItemOfUser(Long userId) {
-        WishList wishList = wishListRepository.findWishListById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + userId));
+        WishList wishList = wishListRepository.findWishListById(userId).orElseThrow(() ->
+                new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + userId));
         Hibernate.initialize(wishList.getWishItems());
         List<WishItem> wishItemList = wishList.getWishItems();
         List<WishItemResponse> wishItemResponses = new ArrayList<>();
@@ -96,7 +99,8 @@ public class WishServiceImpl implements IWishService {
     @Override
     @Transactional
     public List<WishItemResponse> getCurrentWishItemOfUser(Long userId) {
-        WishList wishList = wishListRepository.findWishListById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + userId));
+        WishList wishList = wishListRepository.findWishListById(userId).orElseThrow(() ->
+                new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + userId));
         Hibernate.initialize(wishList.getWishItems());
         List<WishItem> wishItemList = wishList.getWishItems();
         List<WishItemResponse> wishItemResponses = new ArrayList<>();
@@ -118,7 +122,8 @@ public class WishServiceImpl implements IWishService {
     @Transactional
     public Boolean checkProductIsWishItem(String productName, Long userId) {
         Boolean checkProductIsWish = false;
-        WishList wishList = wishListRepository.findWishListById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + userId));
+        WishList wishList = wishListRepository.findWishListById(userId).orElseThrow(() ->
+                new ResourceNotFoundException(AppConstant.WISH_LIST_NOT_FOUND + userId));
         Hibernate.initialize(wishList.getWishItems());
         List<WishItem> wishItemList = wishList.getWishItems();
         for (WishItem item : wishItemList) {
@@ -129,4 +134,6 @@ public class WishServiceImpl implements IWishService {
         }
         return checkProductIsWish;
     }
+
+
 }

@@ -22,7 +22,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String mail) {
 
-        User user = userRepository.findByMail(mail).orElseThrow(() -> new ResourceNotFoundException(AppConstant.MAIL_NOT_FOUND + mail));
+        User user = userRepository.findByMail(mail).orElseThrow(
+                () -> new ResourceNotFoundException(AppConstant.MAIL_NOT_FOUND + mail));
 
         List<SimpleGrantedAuthority> grantedAuthorities = new ArrayList<>();
 

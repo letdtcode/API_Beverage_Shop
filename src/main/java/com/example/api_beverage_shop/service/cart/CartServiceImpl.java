@@ -45,18 +45,22 @@ public class CartServiceImpl implements ICartService {
         String sizeName = cartRequest.getSizeName();
 
         Long cartId = userId;
-        Product product = productRepository.findByProductName(productName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND + productName));
-        Cart cartUser = cartRepository.findCartById(cartId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + cartId));
+        Product product = productRepository.findByProductName(productName).orElseThrow(() ->
+                new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND + productName));
+        Cart cartUser = cartRepository.findCartById(cartId).orElseThrow(() ->
+                new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + cartId));
         List<Topping> toppingList = new ArrayList<>();
         for (String nameTopping : toppingNameList) {
-            Topping topping = toppingRepository.findByToppingName(nameTopping).orElseThrow(() -> new ResourceNotFoundException(AppConstant.TOPPING_NOT_FOUND + nameTopping));
+            Topping topping = toppingRepository.findByToppingName(nameTopping).orElseThrow(() ->
+                    new ResourceNotFoundException(AppConstant.TOPPING_NOT_FOUND + nameTopping));
             toppingList.add(topping);
         }
-        Size size = sizeRepository.findBySizeName(sizeName).orElseThrow(() -> new ResourceNotFoundException(AppConstant.Size_NOT_FOUND + sizeName));
-
+        Size size = sizeRepository.findBySizeName(sizeName).orElseThrow(() ->
+                new ResourceNotFoundException(AppConstant.Size_NOT_FOUND + sizeName));
 
         BigDecimal quantityCovert = new BigDecimal(quantity);
-        BigDecimal totalPriceProduct = (product.getPriceDefault().add(BigDecimal.valueOf(size.getPricePlus()))).multiply(quantityCovert);
+        BigDecimal totalPriceProduct = (product.getPriceDefault()
+                .add(BigDecimal.valueOf(size.getPricePlus()))).multiply(quantityCovert);
         Integer toppingPlus = 0;
         for (Topping toppingItem : toppingList) {
             toppingPlus = toppingPlus + toppingItem.getToppingPrice() * quantity;
@@ -84,8 +88,11 @@ public class CartServiceImpl implements ICartService {
 
     @Override
     public List<CartItemResponse> getAllCartItemInfo(Long userId) {
-        Cart cart = cartRepository.findCartById(userId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + userId));
+        Cart cart = cartRepository.findCartById(userId).orElseThrow(() ->
+                new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + userId));
         List<CartItem> cartItemList = cartItemRepository.findCartItemByCart(cart);
         return cartItemList.stream().map(cartItem -> cartItemMapper.toDTO(cartItem)).collect(Collectors.toList());
     }
+
+
 }

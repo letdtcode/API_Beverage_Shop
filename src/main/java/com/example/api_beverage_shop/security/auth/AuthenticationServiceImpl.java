@@ -50,8 +50,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
 
     @Override
     public AuthResponse register(@RequestBody RegisterRequest request) {
-//        return userService.createUser(request);
-
         if (userRepository.existsByMail(request.getMail())) {
             throw new ResourceExistException(AppConstant.USER_EXIST);
         }
@@ -63,12 +61,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         for (String role : request.getRoles()) {
             roles.add(roleService.findByRoleName(role));
         }
-
         BeanUtils.copyProperties(request, user, "password");
-//        user.setPassword(passwordEncoder.encode(request.getPassword()));
-//        user.setRoles(roles);
-//        user.setCart(cart);
-
         String passwordEncode = passwordEncoder.encode(request.getPassword());
 
         user = userService.createUser(user, passwordEncode, roles);
@@ -103,7 +96,6 @@ public class AuthenticationServiceImpl implements IAuthenticationService {
         authResponse.setRefreshToken(refresh_token);
         authResponse.setRoles(getRoleUser(access_token));
         authResponse.setUserId(user.getId());
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
         return authResponse;
     }
 

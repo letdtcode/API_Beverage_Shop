@@ -136,46 +136,6 @@
     </dependencies>
 
     <build>
-        <!--        <plugins>-->
-        <!--            <plugin>-->
-        <!--                <groupId>org.apache.maven.plugins</groupId>-->
-        <!--                <artifactId>maven-compiler-plugin</artifactId>-->
-        <!--                <version>3.8.1</version>-->
-        <!--                <configuration>-->
-        <!--                    <skip>true</skip>-->
-        <!--                    <source>1.8</source>-->
-        <!--                    <target>1.8</target>-->
-        <!--                </configuration>-->
-        <!--            </plugin>-->
-
-        <!--            <plugin>-->
-        <!--                <groupId>org.apache.maven.plugins</groupId>-->
-        <!--                <artifactId>maven-assembly-plugin</artifactId>-->
-        <!--                <version>3.1.1</version>-->
-        <!--                <configuration>-->
-        <!--&lt;!&ndash;                    <skip>true</skip>&ndash;&gt;-->
-        <!--                    <archive>-->
-        <!--                        <manifest>-->
-        <!--                            <mainClass>com.example.api_beverage_shop.ApiBeverageShopApplication</mainClass>-->
-        <!--                        </manifest>-->
-        <!--                    </archive>-->
-        <!--                    <descriptorRefs>-->
-        <!--                        <descriptorRef>jar-with-dependencies</descriptorRef>-->
-        <!--                    </descriptorRefs>-->
-        <!--                </configuration>-->
-        <!--                <executions>-->
-        <!--                    <execution>-->
-        <!--                        <id>make-assembly</id>-->
-        <!--                        <phase>package</phase>-->
-        <!--                        <goals>-->
-        <!--                            <goal>single</goal>-->
-        <!--                        </goals>-->
-        <!--                    </execution>-->
-        <!--                </executions>-->
-        <!--            </plugin>-->
-        <!--        </plugins>-->
-
-        <!--        Last-->
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

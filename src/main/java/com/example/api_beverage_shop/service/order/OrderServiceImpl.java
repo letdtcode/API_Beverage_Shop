@@ -45,6 +45,9 @@ public class OrderServiceImpl implements IOrderService {
     @Autowired
     private OrderItemMapper orderItemMapper;
 
+    @Autowired
+    private IProductRepository productRepository;
+
     @Override
     public OrderResponse checkOut(CheckOutCartRequest request) {
         Long userId = request.getUserId();
@@ -55,17 +58,16 @@ public class OrderServiceImpl implements IOrderService {
         Integer shipping = request.getShipping();
 
         BigDecimal totalItemPrice = BigDecimal.valueOf(0);
-        BigDecimal totalPrice = BigDecimal.valueOf(0);
+        BigDecimal totalPrice;
         List<Long> cardItemIdList = request.getCardItemId();
-
 
         User userOrder = userRepository.findById(userId)
                 .orElseThrow(() -> new ResourceNotFoundException(AppConstant.USER_NOT_FOUND + userId));
 
-
         List<CartItem> cartItemList = new ArrayList<>();
         for (Long idItem : cardItemIdList) {
-            CartItem item = cartItemRepository.findCartItemById(idItem).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_ITEM_NOT_FOUND + idItem));
+            CartItem item = cartItemRepository.findCartItemById(idItem).orElseThrow(()
+                    -> new ResourceNotFoundException(AppConstant.CART_ITEM_NOT_FOUND + idItem));
             totalItemPrice = totalItemPrice.add(item.getTotalPriceItem());
             cartItemList.add(item);
         }
@@ -100,6 +102,14 @@ public class OrderServiceImpl implements IOrderService {
                     .totalPriceProduct(totalPriceProduct)
                     .totalPriceItem(totalPriceItem).build();
 
+//            Set value for sold count product
+            String productName = productInCart.getProductName();
+            Product product = productRepository.findByProductName(productName).orElseThrow(()
+                    -> new ResourceNotFoundException(AppConstant.PRODUCT_NOT_FOUND_WITH_NAME + productName));
+            Integer soldCountCurrent = productInCart.getSoldCount();
+            product.setSoldCount(soldCountCurrent + quantity);
+            productRepository.save(product);
+
             orderItemRepository.save(orderItem);
         }
         resetCartUser(cartItemList, userId);
@@ -123,7 +133,8 @@ public class OrderServiceImpl implements IOrderService {
         }
 
 //        Reset total price of cart user
-        Cart cartUser = cartRepository.findCartById(cardId).orElseThrow(() -> new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + cardId));
+        Cart cartUser = cartRepository.findCartById(cardId).orElseThrow(()
+                -> new ResourceNotFoundException(AppConstant.CART_NOT_FOUND + cardId));
         cartUser.setTotalPrice(totalCart);
         cartRepository.save(cartUser);
     }
