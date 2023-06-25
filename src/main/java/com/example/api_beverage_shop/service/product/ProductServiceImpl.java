@@ -4,7 +4,9 @@ import com.example.api_beverage_shop.dto.ProductDTO;
 import com.example.api_beverage_shop.exception.ResourceExistException;
 import com.example.api_beverage_shop.exception.ResourceNotFoundException;
 import com.example.api_beverage_shop.mapper.ProductMapper;
+import com.example.api_beverage_shop.model.Category;
 import com.example.api_beverage_shop.model.Product;
+import com.example.api_beverage_shop.repository.ICategoryRepository;
 import com.example.api_beverage_shop.repository.IProductRepository;
 import com.example.api_beverage_shop.service.storage.ICloudinaryService;
 import com.example.api_beverage_shop.service.storage.IStorageService;
@@ -23,6 +25,9 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements IProductService {
     @Autowired
     private IProductRepository productRepository;
+
+    @Autowired
+    private ICategoryRepository categoryRepository;
 
     @Autowired
     private ProductMapper productMapper;
@@ -71,6 +76,13 @@ public class ProductServiceImpl implements IProductService {
         }
         List<ProductDTO> productDTOList = products.stream().map(product ->
                 productMapper.toDTO(product)).collect(Collectors.toList());
+
+//        Add categoryName to Product
+        Category category;
+        for (ProductDTO item : productDTOList) {
+            category = categoryRepository.findById(item.getCategoryId()).get();
+            item.setCategoryName(category.getCategoryName());
+        }
         return productDTOList;
     }
 
